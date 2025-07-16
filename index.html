@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>МаксМаркет</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icons/icon-192.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Lobster&display=swap" rel="stylesheet" />
+  <style>
+    /* --- Твои стили --- */
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      overscroll-behavior: none;
+      scroll-behavior: smooth;
+      font-family: 'Poppins', sans-serif;
+      background-color: #fff0f6;
+      color: #4B004B;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      padding: 15px 20px;
+      background-color: #E0218A;
+      position: relative;
+      z-index: 500;
+      color: white;
+    }
+    header .logo {
+      margin: 0 auto;
+      font-family: 'Lobster', cursive;
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff5fa;
+    }
+    .bottom-icons {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #fff;
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 0;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+    }
+    .bottom-icons button {
+      background: #fff;
+      border: none;
+      color: #e63946;
+      font-size: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .bottom-icons button:hover {
+      color: #c62d3b;
+    }
+    .search-bar {
+      padding: 16px;
+      background-color: #fff5fa;
+      box-shadow: 0 0 8px #f0c1d8;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+    }
+    .search-form {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      gap: 8px;
+    }
+    .search-form input {
+      flex: 1;
+      padding: 12px 40px 12px 16px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      outline: none;
+      box-sizing: border-box;
+    }
+    .search-form button {
+      padding: 12px 18px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background-color: #E0218A;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    #clearSearch {
+      position: absolute;
+      right: 110px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 20px;
+      color: #E0218A;
+      cursor: pointer;
+      display: none;
+      font-weight: bold;
+      background: transparent;
+      border: none;
+      padding: 0;
+      line-height: 1;
+      user-select: none;
+    }
+    .slider {
+      padding: 20px;
+      background: #fefefe;
+    }
+    main {
+      padding: 0 16px 100px;
+      max-width: 900px;
+      margin: 0 auto;
+      box-sizing: border-box;
+      min-height: 60vh; /* минимум высоты для контента */
+    }
+    .product-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 16px;
+    }
+    .product-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #ffe0f2;
+      padding: 16px;
+      position: relative;
+    }
+    .product-card img {
+      width: 100%;
+      border-radius: 12px;
+    }
+    .product-card h3 {
+      margin: 12px 0 8px;
+      font-size: 18px;
+      color: #4B004B;
+    }
+    .product-card p {
+      margin: 4px 0;
+      font-size: 14px;
+      color: #6a2a6c;
+    }
+  </style>
+</head>
+<body>
+  <!-- Хедер -->
+  <header>
+    <h1 class="logo">МаксМаркет</h1>
+    <button id="installApp" class="install-button" style="display:none;">📲 Установить</button>
+  </header>
+
+  <!-- Поисковая панель -->
+  <div class="search-bar">
+    <form class="search-form" onsubmit="return false;">
+      <input type="text" id="searchInput" placeholder="Найти на МаксМаркет" />
+      <span id="clearSearch">✕</span>
+      <button type="submit" id="applySearchBtn">Поиск</button>
+    </form>
+  </div>
+
+  <!-- Слайдер -->
+  <section class="slider">
+    <div class="slide active">🌸 Добро пожаловать в Магазин Максалины!</div>
+    <div class="slide">📢 Здесь могла бы быть ваша РЕКЛАМА</div>
+  </section>
+
+  <!-- Основной контент, сюда загружаем страницы -->
+  <main id="mainContent">
+    <h2>Новинки</h2>
+    <ul id="suggestions"></ul>
+    <div id="productList" class="product-list">
+      <!-- Товары можно сюда динамически подгружать -->
+    </div>
+  </main>
+
+  <!-- Нижнее меню -->
+  <div class="bottom-icons" role="navigation" aria-label="Основное меню">
+    <button data-title="Главная" data-url="home.html" aria-label="Главная">🏠<span class="tooltip">Главная</span></button>
+    <button data-title="Каталог" data-url="catalog.html" aria-label="Каталог">🛒<span class="tooltip">Каталог</span></button>
+    <button data-title="Контакты" data-url="contacts.html" aria-label="Контакты">📞<span class="tooltip">Контакты</span></button>
+    <button data-title="Доставка" data-url="delivery.html" aria-label="Доставка">🚖<span class="tooltip">Доставка</span></button>
+    <button data-title="Избранное" data-url="favorites.html" aria-label="Избранное">❤️<span class="tooltip">Избранное</span></button>
+    <button data-title="Адрес" data-url="adress.html" aria-label="Адрес">📍<span class="tooltip">Адрес</span></button>
+    <button data-title="Условия" data-url="rules.html" aria-label="Условия">📝<span class="tooltip">Условия</span></button>
+    <button data-title="Отзывы" data-url="reviews.html" aria-label="Отзывы">🏆<span class="tooltip">Отзывы</span></button>
+    <button onclick="location.reload()" aria-label="Обновить">🔄<span class="tooltip">Обновить</span></button>
+  </div>
+
+  <script>
+    // Переменные для элементов
+    const mainContent = document.getElementById('mainContent');
+    const buttons = document.querySelectorAll('.bottom-icons button[data-url]');
+    const input = document.getElementById("searchInput");
+    const clearBtn = document.getElementById("clearSearch");
+    const searchBtn = document.getElementById("applySearchBtn");
+
+    // Загрузка страницы в main по URL (SPA)
+    async function loadPage(url, title) {
+      try {
+        mainContent.innerHTML = '<p>Загрузка...</p>';
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Ошибка загрузки');
+        const html = await response.text();
+        mainContent.innerHTML = html;
+        document.title = 'МаксМаркет — ' + title;
+        history.pushState({url, title}, title, `#${url}`);
+      } catch (error) {
+        mainContent.innerHTML = '<p style="color:red;">Ошибка загрузки страницы.</p>';
+        console.error(error);
+      }
+    }
+
+    // Обработчик кликов по меню
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        const url = button.getAttribute('data-url');
+        const title = button.getAttribute('data-title');
+        loadPage(url, title);
+      });
+    });
+
+    // Обработка истории браузера (назад/вперёд)
+    window.addEventListener('popstate', (event) => {
+      if (event.state) {
+        loadPage(event.state.url, event.state.title);
+      } else {
+        loadHome();
+      }
+    });
+
+    // Загрузка главной страницы
+    function loadHome() {
+      mainContent.innerHTML = `
+        <h2>Новинки</h2>
+        <ul id="suggestions"></ul>
+        <div id="productList" class="product-list">
+          <!-- Здесь твои товары -->
+        </div>`;
+      document.title = 'МаксМаркет — Главная';
+      history.replaceState({url:'home.html', title:'Главная'}, 'Главная', '#home.html');
+    }
+
+    // Изначально грузим главную
+    if (!location.hash) {
+      loadHome();
+    } else {
+      // Если есть хэш — подгружаем нужную страницу
+      const hashUrl = location.hash.slice(1);
+      const button = Array.from(buttons).find(b => b.getAttribute('data-url') === hashUrl);
+      if (button) {
+        loadPage(hashUrl, button.getAttribute('data-title'));
+      } else {
+        loadHome();
+      }
+    }
+
+    // Поиск — пример, можно доработать
+    input.addEventListener("input", () => {
+      clearBtn.style.display = input.value.trim() ? "inline" : "none";
+    });
+
+    clearBtn.addEventListener("click", () => {
+      input.value = "";
+      clearBtn.style.display = "none";
+      // Очистить результаты поиска или товары, если нужно
+      document.getElementById("productList").innerHTML = "";
+    });
+
+    searchBtn.addEventListener("click", () => {
+      const query = input.value.trim();
+      if (query !== "") {
+        // Здесь можно реализовать поиск по товарам, пока просто alert
+        alert("Поиск по запросу: " + query);
+      }
+    });
+
+    // Установка PWA (кнопка "Установить")
+    let deferredPrompt;
+    const installBtn = document.getElementById('installApp');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = 'inline-block';
+    });
+
+    installBtn.addEventListener('click', () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('Пользователь согласился установить приложение');
+          } else {
+            console.log('Пользователь отказался от установки');
+          }
+          deferredPrompt = null;
+          installBtn.style.display = 'none';
+        });
+      }
+    });
+  </script>
+</body>
+</html>
