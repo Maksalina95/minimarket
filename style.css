@@ -1,90 +1,41 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Lobster&display=swap');
 
-/* --- Глобальные стили (как у тебя) --- */
+/* === БАЗОВЫЕ СТИЛИ ДЛЯ ВСЕГО САЙТА === */
 html, body {
-  height: 100%;
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
-  overscroll-behavior: none;
-  scroll-behavior: smooth;
   font-family: 'Poppins', sans-serif;
   background-color: #fff0f6;
   color: #4B004B;
+  overflow-x: hidden;
+  height: 100%;
+  overscroll-behavior: none;
 }
 
-/* Хедер */
+/* === ШАПКА === */
 header {
-  display: flex;
-  align-items: center;
-  padding: 15px 20px;
   background-color: #E0218A;
-  position: relative;
-  z-index: 500;
   color: white;
-}
-
-header .logo {
-  margin: 0 auto;
-  font-family: 'Lobster', cursive;
-  font-size: 28px;
-  font-weight: 700;
-  color: #fff5fa;
-}
-
-/* Нижнее меню */
-.bottom-icons {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: #fff;
+  padding: 8px 16px;
   display: flex;
-  justify-content: space-around;
-  padding: 8px 0;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-
-  /* Новый стиль: добавляем горизонтальный скролл, если кнопок много */
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch; /* плавный скролл для iOS */
-}
-
-/* Стили для полосы прокрутки (только для Webkit-браузеров) */
-.bottom-icons::-webkit-scrollbar {
-  height: 6px;
-}
-
-.bottom-icons::-webkit-scrollbar-thumb {
-  background: #e63946;
-  border-radius: 3px;
-}
-
-.bottom-icons button {
-  background: #fff;
-  border: none;
-  color: #e63946;
-  font-size: 24px;
-  display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 4px;
-  cursor: pointer;
-  font-weight: 600;
-
-  /* Минимальная ширина и запрет сжатия, чтобы кнопки не сжимались слишком сильно */
-  min-width: 56px;
-  flex-shrink: 0;
-  padding: 6px 8px;
-  transition: color 0.3s ease;
+  position: relative;
+  z-index: 10;
+  margin: 0;
 }
 
-.bottom-icons button:hover {
-  color: #c62d3b;
+.logo {
+  font-family: 'Lobster', cursive;
+  font-size: 24px;
+  color: #fff5fa;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
 }
 
-/* Поиск */
+/* === ПОИСК === */
 .search-bar {
+  width: 100%;
   padding: 16px;
   background-color: #fff5fa;
   box-shadow: 0 0 8px #f0c1d8;
@@ -93,7 +44,7 @@ header .logo {
   justify-content: center;
 }
 
-.search-form {
+.search-bar form {
   position: relative;
   width: 100%;
   max-width: 900px;
@@ -101,17 +52,20 @@ header .logo {
   gap: 8px;
 }
 
-.search-form input {
+.search-bar input {
   flex: 1;
   padding: 12px 40px 12px 16px;
   font-size: 16px;
   border-radius: 8px;
   border: 1px solid #ccc;
-  outline: none;
   box-sizing: border-box;
 }
 
-.search-form button {
+.search-bar input:focus {
+  outline: 2px solid #E0218A;
+}
+
+.search-bar button {
   padding: 12px 18px;
   font-size: 16px;
   border: none;
@@ -120,7 +74,10 @@ header .logo {
   color: white;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+}
+
+.search-bar button:hover {
+  background-color: #C01578;
 }
 
 #clearSearch {
@@ -140,22 +97,44 @@ header .logo {
   user-select: none;
 }
 
-/* Слайдер */
+/* === СЛАЙДЕР === */
 .slider {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto 32px;
   padding: 20px;
-  background: #fefefe;
+  text-align: center;
 }
 
-/* Основной контент */
+.slide {
+  display: none;
+  font-size: 1.3em;
+  padding: 24px 16px;
+  background-color: #ffc9e8;
+  color: #4B004B;
+  border-radius: 12px;
+  box-shadow: 0 0 20px #ffb7dbaa;
+}
+
+.slide.active {
+  display: block;
+}
+
+/* === ОСНОВНОЙ КОНТЕНТ === */
 main {
-  padding: 0 16px 100px; /* Отступ снизу под меню */
+  padding: 8px 16px 80px;
   max-width: 900px;
   margin: 0 auto;
-  box-sizing: border-box;
-  min-height: 60vh; /* минимум высоты для контента */
 }
 
-/* Список товаров */
+h2 {
+  text-align: center;
+  font-size: 26px;
+  margin: 8px 0 16px;
+  font-weight: 600;
+}
+
+/* === ТОВАРЫ === */
 .product-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -168,6 +147,11 @@ main {
   box-shadow: 0 0 10px #ffe0f2;
   padding: 16px;
   position: relative;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
 }
 
 .product-card img {
@@ -187,7 +171,82 @@ main {
   color: #6a2a6c;
 }
 
-/* Адаптивные улучшения для мобильных */
+.product-card .fav-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 22px;
+  color: #E0218A;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* === ФИКСИРОВАННОЕ НИЖНЕЕ МЕНЮ === */
+.bottom-icons {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 6px 0;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.bottom-icons button {
+  flex: 1;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background: none;
+  border: none;
+  color: #e63946;
+  font-size: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.bottom-icons button:hover {
+  color: #c62d3b;
+}
+
+/* === ПОДСКАЗКИ (Tooltip) === */
+.tooltip {
+  font-size: 10px;
+  color: #555;
+  margin-top: 4px;
+  line-height: 1;
+}
+
+/* === КНОПКА УСТАНОВКИ === */
+.install-button {
+  background-color: #fff;
+  border: 2px solid #fff5fa;
+  color: #fff5fa;
+  font-weight: bold;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-left: auto;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.install-button:hover {
+  background-color: #fff5fa;
+  color: #E0218A;
+}
+
+/* === АДАПТИВ ДЛЯ МОБИЛЬНЫХ === */
 @media (max-width: 768px) {
   .search-bar {
     padding: 12px;
@@ -197,21 +256,11 @@ main {
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   }
 
-  header .logo {
-    font-size: 22px;
+  .logo {
+    font-size: 18px;
   }
 
   .bottom-icons button {
-    font-size: 22px;
-    min-width: 50px;
-    padding: 5px 6px;
-  }
-}
-
-@media (max-width: 480px) {
-  .bottom-icons button {
-    font-size: 20px;
-    min-width: 48px;
-    padding: 5px 4px;
+    font-size: 18px;
   }
 }
