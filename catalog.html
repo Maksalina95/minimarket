@@ -6,14 +6,19 @@
   // Анимация появления заголовка
   document.querySelector('.page-title')?.classList.add('fade-in');
 
-  document.addEventListener('DOMContentLoaded', async () => {
+  (async () => {
     const container = document.getElementById("categoryList");
 
     try {
       const res = await fetch(`${baseUrl}/Лист1`);
       const data = await res.json();
 
-      const categories = [...new Set(data.map(p => p.категория).filter(Boolean))];
+      const categories = [...new Set(data.map(p => p.категория?.trim()).filter(Boolean))];
+
+      if (categories.length === 0) {
+        container.innerHTML = `<p style="color: #E0218A; font-weight: bold;">Категории не найдены.</p>`;
+        return;
+      }
 
       categories.forEach(cat => {
         const card = document.createElement("div");
@@ -30,5 +35,5 @@
       container.innerHTML = `<p style="color:red;">Ошибка загрузки категорий.</p>`;
       console.error(err);
     }
-  });
+  })();
 </script>
