@@ -3,7 +3,6 @@
 
 <script src="scripts/config.js"></script>
 <script>
-  // Плавная анимация заголовка
   document.querySelector('.page-title')?.classList.add('fade-in');
 
   (async () => {
@@ -22,34 +21,29 @@
       const res = await fetch(`${baseUrl}/Лист1`);
       const data = await res.json();
 
-      // Фильтрация по категории
-      const items = data.filter(item => item.категория?.trim() === category);
+      // Фильтруем по категории и собираем уникальные подкатегории
+      const subcategories = [...new Set(
+        data
+          .filter(item => item.категория?.trim() === category && item.подкатегория?.trim())
+          .map(item => item.подкатегория.trim())
+      )];
 
-      if (items.length === 0) {
-        container.innerHTML = `<p style="color:#E0218A; font-weight: bold;">Нет подкатегорий или товаров в этой категории.</p>`;
+      if (subcategories.length === 0) {
+        container.innerHTML = `<p style="color:#E0218A; font-weight: bold;">Подкатегории не найдены.</p>`;
         return;
       }
 
-      // Изменение заголовка
       titleEl.textContent = category;
 
-      // Создание карточек
-      items.forEach(item => {
+      // Создаём карточки подкатегорий — кликабельные для перехода
+      subcategories.forEach(subcat => {
         const card = document.createElement("div");
         card.className = "product-card";
-
-        // Фото, если есть
-        const imageHtml = item.фото
-          ? `<img src="${item.фото}" alt="${item.название || 'Товар'}" />`
-          : "";
-
-        card.innerHTML = `
-          ${imageHtml}
-          <h3>${item.название || "Без названия"}</h3>
-          <p><strong>${item.цена ? item.цена + " ₽" : "Цена не указана"}</strong></p>
-          ${item.описание ? `<p>${item.описание}</p>` : ""}
-        `;
-
+        card.style.cursor = "pointer";
+        card.innerHTML = `<h3>${subcat}</h3>`;
+        card.addEventListener("click", () => {
+          window.location.href = `product-list.html?category=${encodeURIComponent(category)}&subcategory=${encodeURIComponent(subcat)}`;
+        });
         container.appendChild(card);
       });
 
