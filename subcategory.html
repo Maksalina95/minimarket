@@ -1,0 +1,61 @@
+<h2 class="page-title" id="subcategoryTitle">Подкатегории</h2>
+<div id="subcategoryList" class="product-list"></div>
+
+<script src="scripts/config.js"></script>
+<script>
+  // Плавная анимация заголовка
+  document.querySelector('.page-title')?.classList.add('fade-in');
+
+  (async () => {
+    const container = document.getElementById("subcategoryList");
+    const titleEl = document.getElementById("subcategoryTitle");
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const category = urlParams.get("category");
+
+    if (!category) {
+      container.innerHTML = `<p style="color:red;">Категория не указана.</p>`;
+      return;
+    }
+
+    try {
+      const res = await fetch(`${baseUrl}/Лист1`);
+      const data = await res.json();
+
+      // Фильтрация по категории
+      const items = data.filter(item => item.категория?.trim() === category);
+
+      if (items.length === 0) {
+        container.innerHTML = `<p style="color:#E0218A; font-weight: bold;">Нет подкатегорий или товаров в этой категории.</p>`;
+        return;
+      }
+
+      // Изменение заголовка
+      titleEl.textContent = category;
+
+      // Создание карточек
+      items.forEach(item => {
+        const card = document.createElement("div");
+        card.className = "product-card";
+
+        // Фото, если есть
+        const imageHtml = item.фото
+          ? `<img src="${item.фото}" alt="${item.название || 'Товар'}" />`
+          : "";
+
+        card.innerHTML = `
+          ${imageHtml}
+          <h3>${item.название || "Без названия"}</h3>
+          <p><strong>${item.цена ? item.цена + " ₽" : "Цена не указана"}</strong></p>
+          ${item.описание ? `<p>${item.описание}</p>` : ""}
+        `;
+
+        container.appendChild(card);
+      });
+
+    } catch (err) {
+      container.innerHTML = `<p style="color:red;">Ошибка загрузки подкатегорий.</p>`;
+      console.error(err);
+    }
+  })();
+</script>
