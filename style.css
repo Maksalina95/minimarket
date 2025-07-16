@@ -1,0 +1,217 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Lobster&display=swap');
+
+/* --- Глобальные стили (как у тебя) --- */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overscroll-behavior: none;
+  scroll-behavior: smooth;
+  font-family: 'Poppins', sans-serif;
+  background-color: #fff0f6;
+  color: #4B004B;
+}
+
+/* Хедер */
+header {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #E0218A;
+  position: relative;
+  z-index: 500;
+  color: white;
+}
+
+header .logo {
+  margin: 0 auto;
+  font-family: 'Lobster', cursive;
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff5fa;
+}
+
+/* Нижнее меню */
+.bottom-icons {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 0;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+
+  /* Новый стиль: добавляем горизонтальный скролл, если кнопок много */
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* плавный скролл для iOS */
+}
+
+/* Стили для полосы прокрутки (только для Webkit-браузеров) */
+.bottom-icons::-webkit-scrollbar {
+  height: 6px;
+}
+
+.bottom-icons::-webkit-scrollbar-thumb {
+  background: #e63946;
+  border-radius: 3px;
+}
+
+.bottom-icons button {
+  background: #fff;
+  border: none;
+  color: #e63946;
+  font-size: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  font-weight: 600;
+
+  /* Минимальная ширина и запрет сжатия, чтобы кнопки не сжимались слишком сильно */
+  min-width: 56px;
+  flex-shrink: 0;
+  padding: 6px 8px;
+  transition: color 0.3s ease;
+}
+
+.bottom-icons button:hover {
+  color: #c62d3b;
+}
+
+/* Поиск */
+.search-bar {
+  padding: 16px;
+  background-color: #fff5fa;
+  box-shadow: 0 0 8px #f0c1d8;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+}
+
+.search-form {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  gap: 8px;
+}
+
+.search-form input {
+  flex: 1;
+  padding: 12px 40px 12px 16px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.search-form button {
+  padding: 12px 18px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #E0218A;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#clearSearch {
+  position: absolute;
+  right: 110px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: #E0218A;
+  cursor: pointer;
+  display: none;
+  font-weight: bold;
+  background: transparent;
+  border: none;
+  padding: 0;
+  line-height: 1;
+  user-select: none;
+}
+
+/* Слайдер */
+.slider {
+  padding: 20px;
+  background: #fefefe;
+}
+
+/* Основной контент */
+main {
+  padding: 0 16px 100px; /* Отступ снизу под меню */
+  max-width: 900px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  min-height: 60vh; /* минимум высоты для контента */
+}
+
+/* Список товаров */
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+.product-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 0 10px #ffe0f2;
+  padding: 16px;
+  position: relative;
+}
+
+.product-card img {
+  width: 100%;
+  border-radius: 12px;
+}
+
+.product-card h3 {
+  margin: 12px 0 8px;
+  font-size: 18px;
+  color: #4B004B;
+}
+
+.product-card p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #6a2a6c;
+}
+
+/* Адаптивные улучшения для мобильных */
+@media (max-width: 768px) {
+  .search-bar {
+    padding: 12px;
+  }
+
+  .product-list {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+
+  header .logo {
+    font-size: 22px;
+  }
+
+  .bottom-icons button {
+    font-size: 22px;
+    min-width: 50px;
+    padding: 5px 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .bottom-icons button {
+    font-size: 20px;
+    min-width: 48px;
+    padding: 5px 4px;
+  }
+}
