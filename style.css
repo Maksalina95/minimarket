@@ -1,266 +1,84 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Lobster&display=swap');
 
-/* === БАЗОВЫЕ СТИЛИ ДЛЯ ВСЕГО САЙТА === */
-html, body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Poppins', sans-serif;
-  background-color: #fff0f6;
-  color: #4B004B;
-  overflow-x: hidden;
-  height: 100%;
-  overscroll-behavior: none;
-}
+/* 1. Глобальные стили */ html, body { margin: 0; padding: 0; font-family: 'Poppins', sans-serif; background-color: #fff0f6; color: #4B004B; overflow-x: hidden; height: 100%; overscroll-behavior: none; }
 
-/* === ШАПКА === */
-header {
-  background-color: #E0218A;
-  color: white;
-  padding: 8px 16px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  z-index: 10;
-  margin: 0;
-}
+/* 2. Шапка */ header { background-color: #E0218A; color: white; padding: 8px 16px; display: flex; justify-content: center; align-items: center; position: relative; z-index: 10; margin: 0; }
 
-.logo {
-  font-family: 'Lobster', cursive;
-  font-size: 24px;
-  color: #fff5fa;
-  letter-spacing: 1px;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
-}
+.logo { font-family: 'Lobster', cursive; font-size: 24px; color: #fff5fa; letter-spacing: 1px; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); }
 
-/* === ПОИСК === */
-.search-bar {
-  width: 100%;
-  padding: 16px;
-  background-color: #fff5fa;
-  box-shadow: 0 0 8px #f0c1d8;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-}
+/* 3. Поиск */ .search-bar { width: 100%; padding: 16px; background-color: #fff5fa; box-shadow: 0 0 8px #f0c1d8; box-sizing: border-box; display: flex; justify-content: center; }
 
-.search-bar form {
-  position: relative;
-  width: 100%;
-  max-width: 900px;
-  display: flex;
-  gap: 8px;
-}
+.search-bar form { position: relative; width: 100%; max-width: 900px; display: flex; gap: 8px; }
 
-.search-bar input {
-  flex: 1;
-  padding: 12px 40px 12px 16px;
-  font-size: 16px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
+.search-bar input { flex: 1; padding: 12px 40px 12px 16px; font-size: 16px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; }
 
-.search-bar input:focus {
-  outline: 2px solid #E0218A;
-}
+.search-bar input:focus { outline: 2px solid #E0218A; }
 
-.search-bar button {
-  padding: 12px 18px;
-  font-size: 16px;
-  border: none;
-  border-radius: 8px;
-  background-color: #E0218A;
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
-}
+.search-bar button { padding: 12px 18px; font-size: 16px; border: none; border-radius: 8px; background-color: #E0218A; color: white; font-weight: 600; cursor: pointer; }
 
-.search-bar button:hover {
-  background-color: #C01578;
-}
+.search-bar button:hover { background-color: #C01578; }
 
-#clearSearch {
-  position: absolute;
-  right: 110px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 20px;
-  color: #E0218A;
-  cursor: pointer;
-  display: none;
-  font-weight: bold;
-  background: transparent;
-  border: none;
-  padding: 0;
-  line-height: 1;
-  user-select: none;
-}
+#clearSearch:hover { background-color: #ffe0f2; border-radius: 4px; }
 
-/* === СЛАЙДЕР === */
-.slider {
-  width: 100%;
-  max-width: 700px;
-  margin: 0 auto 32px;
-  padding: 20px;
-  text-align: center;
-}
+/* 4. Слайдер */ .slider { width: 100%; max-width: 700px; margin: 0 auto 32px; padding: 20px; text-align: center; }
 
-.slide {
-  display: none;
-  font-size: 1.3em;
-  padding: 24px 16px;
-  background-color: #ffc9e8;
-  color: #4B004B;
-  border-radius: 12px;
-  box-shadow: 0 0 20px #ffb7dbaa;
-}
+.slide { display: none; font-size: 1.3em; padding: 24px 16px; background-color: #ffc9e8; color: #4B004B; border-radius: 12px; box-shadow: 0 0 20px #ffb7dbaa; }
 
-.slide.active {
-  display: block;
-}
+.slide.active { display: block; }
 
-/* === ОСНОВНОЙ КОНТЕНТ === */
-main {
-  padding: 8px 16px 80px;
-  max-width: 900px;
-  margin: 0 auto;
-}
+/* 5. Основной контент */ main { padding: 8px 16px 100px; max-width: 900px; margin: 0 auto; }
 
-h2 {
-  text-align: center;
-  font-size: 26px;
-  margin: 8px 0 16px;
-  font-weight: 600;
-}
+h2 { text-align: center; font-size: 26px; margin: 8px 0 16px; font-weight: 600; }
 
-/* === ТОВАРЫ === */
-.product-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 16px;
-}
+/* 6. Товары */ .product-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; }
 
-.product-card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 0 10px #ffe0f2;
-  padding: 16px;
-  position: relative;
-  transition: transform 0.3s ease;
-}
+.product-card { background: white; border-radius: 12px; box-shadow: 0 0 10px #ffe0f2; padding: 16px; position: relative; transition: transform 0.3s ease; }
 
-.product-card:hover {
-  transform: translateY(-4px);
-}
+.product-card:hover { transform: translateY(-4px); }
 
-.product-card img {
-  width: 100%;
-  border-radius: 12px;
-}
+.product-card img { width: 100%; border-radius: 12px; }
 
-.product-card h3 {
-  margin: 12px 0 8px;
-  font-size: 18px;
-  color: #4B004B;
-}
+.product-card h3 { margin: 12px 0 8px; font-size: 18px; color: #4B004B; }
 
-.product-card p {
-  margin: 4px 0;
-  font-size: 14px;
-  color: #6a2a6c;
-}
+.product-card p { margin: 4px 0; font-size: 14px; color: #6a2a6c; }
 
-.product-card .fav-btn {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  font-size: 22px;
-  color: #E0218A;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
+.product-card .fav-btn { position: absolute; top: 12px; right: 12px; font-size: 22px; color: #E0218A; background: none; border: none; cursor: pointer; }
 
-/* === ФИКСИРОВАННОЕ НИЖНЕЕ МЕНЮ === */
-.bottom-icons {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: #fff;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 6px 0;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-}
+/* 7. Нижнее меню */ .bottom-icons { position: fixed; bottom: 0; left: 0; width: 100%; background: #fff; display: flex; justify-content: space-around; padding: 8px 0; box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); z-index: 1000; }
 
-.bottom-icons button {
-  flex: 1;
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  background: none;
-  border: none;
-  color: #e63946;
-  font-size: 22px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-weight: 600;
-  cursor: pointer;
-  padding: 4px 0;
-}
+.bottom-icons button { position: relative; background: #fff; border: none; color: #e63946; font-size: 28px; display: flex; flex-direction: column; align-items: center; cursor: pointer; font-weight: 600; padding: 6px 4px; user-select: none; }
 
-.bottom-icons button:hover {
-  color: #c62d3b;
-}
+.bottom-icons button:hover, .bottom-icons button:focus, .bottom-icons button:active { color: #c62d3b; }
 
-/* === ПОДСКАЗКИ (Tooltip) === */
-.tooltip {
-  font-size: 10px;
-  color: #555;
-  margin-top: 4px;
-  line-height: 1;
-}
+/* 8. Tooltip */ .tooltip { position: absolute; bottom: 38px; left: 50%; transform: translateX(-50%) translateY(5px); background: #e63946; color: white; padding: 3px 8px; border-radius: 12px; font-size: 12px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.25s ease, transform 0.25s ease; z-index: 1001; }
 
-/* === КНОПКА УСТАНОВКИ === */
-.install-button {
-  background-color: #fff;
-  border: 2px solid #fff5fa;
-  color: #fff5fa;
-  font-weight: bold;
-  padding: 6px 10px;
-  border-radius: 8px;
-  font-size: 14px;
-  margin-left: auto;
-  cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
+.bottom-icons button:hover .tooltip, .bottom-icons button:focus .tooltip, .bottom-icons button:active .tooltip { opacity: 1; transform: translateX(-50%) translateY(0); pointer-events: auto; }
 
-.install-button:hover {
-  background-color: #fff5fa;
-  color: #E0218A;
-}
+.tooltip::after { content: ""; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border-width: 5px; border-style: solid; border-color: #e63946 transparent transparent transparent; }
 
-/* === АДАПТИВ ДЛЯ МОБИЛЬНЫХ === */
-@media (max-width: 768px) {
-  .search-bar {
-    padding: 12px;
-  }
+/* 9. Кнопка установки */ .install-button { background-color: #fff; border: 2px solid #fff5fa; color: #fff5fa; font-weight: bold; padding: 6px 10px; border-radius: 8px; font-size: 14px; margin-left: auto; cursor: pointer; transition: background-color 0.3s ease, color 0.3s ease; }
 
-  .product-list {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  }
+.install-button:hover { background-color: #fff5fa; color: #E0218A; }
 
-  .logo {
-    font-size: 18px;
-  }
+/* 10. Панель и адаптив */ .always-close-button { position: absolute; top: 15px; right: 15px; background-color: #ffffff; color: #E0218A; border: 1.5px solid #E0218A; border-radius: 8px; width: 40px; height: 40px; font-size: 20px; font-weight: 600; cursor: pointer; transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease; z-index: 2000; }
 
-  .bottom-icons button {
-    font-size: 18px;
-  }
-}
+.always-close-button:hover { background-color: #fff0f6; color: #C01578; box-shadow: 0 4px 12px rgba(224, 33, 138, 0.3); }
+
+.full-panel { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #fff; z-index: 1500; display: none; flex-direction: column; align-items: center; justify-content: flex-start; padding: 40px 20px; box-sizing: border-box; animation: fadeIn 0.3s ease; overflow-y: auto; }
+
+.full-panel.active { display: flex; }
+
+.full-panel h2 { font-size: 26px; color: #e63946; margin-bottom: 20px; }
+
+.full-panel .close-panel { position: absolute; top: 15px; right: 15px; font-size: 28px; background: transparent; border: none; cursor: pointer; color: #333; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* 11. Адаптив */ @media (max-width: 768px) { .search-bar { padding: 12px; }
+
+.product-list { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+
+.logo { font-size: 18px; }
+
+.bottom-icons button { font-size: 20px; } }
+
