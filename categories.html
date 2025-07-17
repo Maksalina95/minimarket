@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Категории</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="scripts/config.js"></script>
+</head>
+<body>
+  <h2>Категории</h2>
+  <div id="categoryList" class="category-list"></div>
+
+  <script>
+    (async () => {
+      const res = await fetch(`${baseUrl}/Лист1`);
+      const data = await res.json();
+
+      const categories = {};
+
+      data.forEach(item => {
+        const cat = item.категория?.trim();
+        const sub = item.подкатегория?.trim();
+        if (!cat || !sub) return;
+
+        if (!categories[cat]) categories[cat] = new Set();
+        categories[cat].add(sub);
+      });
+
+      const container = document.getElementById("categoryList");
+
+      Object.entries(categories).forEach(([cat, subs]) => {
+        const section = document.createElement("div");
+        section.className = "category-block";
+        section.innerHTML = `<h3>${cat}</h3>`;
+
+        subs.forEach(sub => {
+          const link = document.createElement("a");
+          link.href = `products.html?category=${encodeURIComponent(cat)}&subcategory=${encodeURIComponent(sub)}`;
+          link.textContent = sub;
+          section.appendChild(link);
+        });
+
+        container.appendChild(section);
+      });
+    })();
+  </script>
+</body>
+</html>
