@@ -2,166 +2,22 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>МаксМаркет</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="icons/icon-192.png" type="image/png" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Lobster&display=swap" rel="stylesheet" />
-  <style>
-    /* --- Твои стили --- */
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-      overscroll-behavior: none;
-      scroll-behavior: smooth;
-      font-family: 'Poppins', sans-serif;
-      background-color: #fff0f6;
-      color: #4B004B;
-    }
-    header {
-      display: flex;
-      align-items: center;
-      padding: 15px 20px;
-      background-color: #E0218A;
-      position: relative;
-      z-index: 500;
-      color: white;
-    }
-    header .logo {
-      margin: 0 auto;
-      font-family: 'Lobster', cursive;
-      font-size: 28px;
-      font-weight: 700;
-      color: #fff5fa;
-    }
-    .bottom-icons {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: #fff;
-      display: flex;
-      justify-content: space-around;
-      padding: 8px 0;
-      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-      z-index: 1000;
-    }
-    .bottom-icons button {
-      background: #fff;
-      border: none;
-      color: #e63946;
-      font-size: 24px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-    .bottom-icons button:hover {
-      color: #c62d3b;
-    }
-    .search-bar {
-      padding: 16px;
-      background-color: #fff5fa;
-      box-shadow: 0 0 8px #f0c1d8;
-      box-sizing: border-box;
-      display: flex;
-      justify-content: center;
-    }
-    .search-form {
-      position: relative;
-      width: 100%;
-      max-width: 900px;
-      display: flex;
-      gap: 8px;
-    }
-    .search-form input {
-      flex: 1;
-      padding: 12px 40px 12px 16px;
-      font-size: 16px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      outline: none;
-      box-sizing: border-box;
-    }
-    .search-form button {
-      padding: 12px 18px;
-      font-size: 16px;
-      border: none;
-      border-radius: 8px;
-      background-color: #E0218A;
-      color: white;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    #clearSearch {
-      position: absolute;
-      right: 110px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 20px;
-      color: #E0218A;
-      cursor: pointer;
-      display: none;
-      font-weight: bold;
-      background: transparent;
-      border: none;
-      padding: 0;
-      line-height: 1;
-      user-select: none;
-    }
-    .slider {
-      padding: 20px;
-      background: #fefefe;
-    }
-    main {
-      padding: 0 16px 100px;
-      max-width: 900px;
-      margin: 0 auto;
-      box-sizing: border-box;
-      min-height: 60vh; /* минимум высоты для контента */
-    }
-    .product-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 16px;
-    }
-    .product-card {
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 0 10px #ffe0f2;
-      padding: 16px;
-      position: relative;
-    }
-    .product-card img {
-      width: 100%;
-      border-radius: 12px;
-    }
-    .product-card h3 {
-      margin: 12px 0 8px;
-      font-size: 18px;
-      color: #4B004B;
-    }
-    .product-card p {
-      margin: 4px 0;
-      font-size: 14px;
-      color: #6a2a6c;
-    }
-  </style>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Lobster&display=swap"
+    rel="stylesheet"
+  />
 </head>
 <body>
-  <!-- Хедер -->
   <header>
     <h1 class="logo">МаксМаркет</h1>
     <button id="installApp" class="install-button" style="display:none;">📲 Установить</button>
   </header>
 
-  <!-- Поисковая панель -->
   <div class="search-bar">
     <form class="search-form" onsubmit="return false;">
       <input type="text" id="searchInput" placeholder="Найти на МаксМаркет" />
@@ -170,25 +26,27 @@
     </form>
   </div>
 
-  <!-- Слайдер -->
   <section class="slider">
     <div class="slide active">🌸 Добро пожаловать в Магазин Максалины!</div>
     <div class="slide">📢 Здесь могла бы быть ваша РЕКЛАМА</div>
   </section>
 
-  <!-- Основной контент, сюда загружаем страницы -->
+  <!-- Навигация хлебные крошки -->
+  <nav id="breadcrumbs" aria-label="Хлебные крошки" style="display:none;"></nav>
+
+  <!-- Основной контент -->
   <main id="mainContent">
     <h2>Новинки</h2>
     <ul id="suggestions"></ul>
-    <div id="productList" class="product-list">
-      <!-- Товары можно сюда динамически подгружать -->
-    </div>
+    <div id="categoryList"></div>
+    <div id="subcategoryList"></div>
+    <div id="subsubcategoryList"></div>
+    <div id="productList" class="product-list"></div>
   </main>
 
-  <!-- Нижнее меню -->
   <div class="bottom-icons" role="navigation" aria-label="Основное меню">
     <button data-title="Главная" data-url="home.html" aria-label="Главная">🏠<span class="tooltip">Главная</span></button>
-    <button data-title="Каталог" data-url="catalog.html" aria-label="Каталог">🛒<span class="tooltip">Каталог</span></button>
+    <button data-title="Каталог" id="catalogBtn" aria-label="Каталог">🛒<span class="tooltip">Каталог</span></button>
     <button data-title="Контакты" data-url="contacts.html" aria-label="Контакты">📞<span class="tooltip">Контакты</span></button>
     <button data-title="Доставка" data-url="delivery.html" aria-label="Доставка">🚖<span class="tooltip">Доставка</span></button>
     <button data-title="Избранное" data-url="favorites.html" aria-label="Избранное">❤️<span class="tooltip">Избранное</span></button>
@@ -198,118 +56,190 @@
     <button onclick="location.reload()" aria-label="Обновить">🔄<span class="tooltip">Обновить</span></button>
   </div>
 
+  <!-- Подключаем твои скрипты конфиг и каталог -->
+  <script src="скрипты/конфиг.js"></script>
+  <script src="скрипты/каталог.js"></script>
+
   <script>
-    // Переменные для элементов
-    const mainContent = document.getElementById('mainContent');
-    const buttons = document.querySelectorAll('.bottom-icons button[data-url]');
-    const input = document.getElementById("searchInput");
-    const clearBtn = document.getElementById("clearSearch");
-    const searchBtn = document.getElementById("applySearchBtn");
+    // Навигация и управление каталогом
+    const breadcrumbs = document.getElementById('breadcrumbs');
+    const categoryList = document.getElementById('categoryList');
+    const subcategoryList = document.getElementById('subcategoryList');
+    const subsubcategoryList = document.getElementById('subsubcategoryList');
+    const productList = document.getElementById('productList');
 
-    // Загрузка страницы в main по URL (SPA)
-    async function loadPage(url, title) {
-      try {
-        mainContent.innerHTML = '<p>Загрузка...</p>';
-        const response = await fetch(url);
-        if (!response.ok) throw new Error('Ошибка загрузки');
-        const html = await response.text();
-        mainContent.innerHTML = html;
-        document.title = 'МаксМаркет — ' + title;
-        history.pushState({url, title}, title, `#${url}`);
-      } catch (error) {
-        mainContent.innerHTML = '<p style="color:red;">Ошибка загрузки страницы.</p>';
-        console.error(error);
-      }
+    // Инициализация - показываем категории при загрузке
+    loadCatalogData().then(() => {
+      showCategories();
+      showBreadcrumbs([]);
+      showAllCatalogBlocks(false);
+    });
+
+    // Показываем или прячем блоки каталога
+    function showAllCatalogBlocks(show) {
+      categoryList.style.display = show ? 'block' : 'none';
+      subcategoryList.style.display = show ? 'block' : 'none';
+      subsubcategoryList.style.display = show ? 'block' : 'none';
+      productList.style.display = show ? 'block' : 'none';
     }
 
-    // Обработчик кликов по меню
-    buttons.forEach(button => {
-      button.addEventListener('click', () => {
-        const url = button.getAttribute('data-url');
-        const title = button.getAttribute('data-title');
-        loadPage(url, title);
+    // Отображаем хлебные крошки
+    function showBreadcrumbs(path) {
+      if (!path.length) {
+        breadcrumbs.style.display = 'none';
+        return;
+      }
+      breadcrumbs.style.display = 'block';
+      breadcrumbs.innerHTML = '';
+      path.forEach((item, i) => {
+        if (i < path.length - 1) {
+          const a = document.createElement('a');
+          a.textContent = item.name;
+          a.href = '#';
+          a.onclick = (e) => {
+            e.preventDefault();
+            navigateTo(i);
+          };
+          breadcrumbs.appendChild(a);
+          const sep = document.createElement('span');
+          sep.textContent = '›';
+          breadcrumbs.appendChild(sep);
+        } else {
+          const span = document.createElement('span');
+          span.textContent = item.name;
+          breadcrumbs.appendChild(span);
+        }
       });
-    });
-
-    // Обработка истории браузера (назад/вперёд)
-    window.addEventListener('popstate', (event) => {
-      if (event.state) {
-        loadPage(event.state.url, event.state.title);
-      } else {
-        loadHome();
-      }
-    });
-
-    // Загрузка главной страницы
-    function loadHome() {
-      mainContent.innerHTML = `
-        <h2>Новинки</h2>
-        <ul id="suggestions"></ul>
-        <div id="productList" class="product-list">
-          <!-- Здесь твои товары -->
-        </div>`;
-      document.title = 'МаксМаркет — Главная';
-      history.replaceState({url:'home.html', title:'Главная'}, 'Главная', '#home.html');
     }
 
-    // Изначально грузим главную
-    if (!location.hash) {
-      loadHome();
-    } else {
-      // Если есть хэш — подгружаем нужную страницу
-      const hashUrl = location.hash.slice(1);
-      const button = Array.from(buttons).find(b => b.getAttribute('data-url') === hashUrl);
-      if (button) {
-        loadPage(hashUrl, button.getAttribute('data-title'));
+    // Хранение пути навигации
+    let currentPath = [];
+
+    // Навигация по уровню
+    function navigateTo(level) {
+      currentPath = currentPath.slice(0, level + 1);
+      updateCatalogByPath();
+    }
+
+    // Обновляем контент в каталоге по пути currentPath
+    function updateCatalogByPath() {
+      if (currentPath.length === 0) {
+        showCategories();
+      } else if (currentPath.length === 1) {
+        showSubcategories(currentPath[0].name);
+      } else if (currentPath.length === 2) {
+        showSubsubcategories(currentPath[0].name, currentPath[1].name);
+      } else if (currentPath.length === 3) {
+        showProducts(currentPath[0].name, currentPath[1].name, currentPath[2].name);
+      }
+      showBreadcrumbs(currentPath);
+      showAllCatalogBlocks(true);
+    }
+
+    // Обработчики кликов из твоих функций каталога
+    function showCategories() {
+      const categories = [...new Set(allData.map(p => p.категория).filter(Boolean))];
+      categoryList.innerHTML = categories.map(cat =>
+        `<button class="catalog-button" onclick="onCategoryClick('${cat}')">${cat}</button>`
+      ).join('');
+      subcategoryList.innerHTML = '';
+      subsubcategoryList.innerHTML = '';
+      productList.innerHTML = '';
+      showAllCatalogBlocks(true);
+      currentPath = [];
+      showBreadcrumbs(currentPath);
+    }
+
+    function onCategoryClick(cat) {
+      currentPath = [{name: cat}];
+      updateCatalogByPath();
+    }
+
+    function showSubcategories(category) {
+      const subcategories = [...new Set(allData
+        .filter(p => p.категория === category)
+        .map(p => p.подкатегория)
+        .filter(Boolean)
+      )];
+      subcategoryList.innerHTML = subcategories.map(sub =>
+        `<button class="catalog-button" onclick="onSubcategoryClick('${category}', '${sub}')">${sub}</button>`
+      ).join('');
+      subsubcategoryList.innerHTML = '';
+      productList.innerHTML = '';
+    }
+
+    function onSubcategoryClick(category, subcat) {
+      currentPath = [{name: category}, {name: subcat}];
+      updateCatalogByPath();
+    }
+
+    function showSubsubcategories(category, subcategory) {
+      const subsubcategories = [...new Set(allData
+        .filter(p => p.категория === category && p.подкатегория === subcategory)
+        .map(p => p.подподкатегория)
+        .filter(Boolean)
+      )];
+      if (subsubcategories.length) {
+        subsubcategoryList.innerHTML = subsubcategories.map(sub =>
+          `<button class="catalog-button" onclick="onSubsubcategoryClick('${category}', '${subcategory}', '${sub}')">${sub}</button>`
+        ).join('');
+        productList.innerHTML = '';
       } else {
-        loadHome();
+        // Если подподкатегорий нет, показываем товары сразу
+        subsubcategoryList.innerHTML = '';
+        showProducts(category, subcategory, null);
       }
     }
 
-    // Поиск — пример, можно доработать
-    input.addEventListener("input", () => {
-      clearBtn.style.display = input.value.trim() ? "inline" : "none";
-    });
+    function onSubsubcategoryClick(category, subcat, subsubcat) {
+      currentPath = [{name: category}, {name: subcat}, {name: subsubcat}];
+      updateCatalogByPath();
+    }
 
-    clearBtn.addEventListener("click", () => {
-      input.value = "";
-      clearBtn.style.display = "none";
-      // Очистить результаты поиска или товары, если нужно
-      document.getElementById("productList").innerHTML = "";
-    });
+    function showProducts(category, subcategory, subsubcategory) {
+      const products = allData.filter(p =>
+        p.категория === category &&
+        p.подкатегория === subcategory &&
+        (subsubcategory ? p.подподкатегория === subsubcategory : true)
+      );
+      renderProductList(products, productList);
+    }
 
-    searchBtn.addEventListener("click", () => {
-      const query = input.value.trim();
-      if (query !== "") {
-        // Здесь можно реализовать поиск по товарам, пока просто alert
-        alert("Поиск по запросу: " + query);
+    function renderProductList(products, container) {
+      if (!container) return;
+
+      if (products.length === 0) {
+        container.innerHTML = '<p>Товаров нет</p>';
+        return;
       }
+
+      container.innerHTML = products.map(p => `
+        <div class="product-card">
+          ${p.фото ? `<img src="${p.фото}" alt="${p.название}" loading="lazy" />` : ''}
+          <h3>${p.название || ''}</h3>
+          <p>${p.описание || ''}</p>
+          <p><strong>${p.цена || ''}</strong></p>
+          <div class="buttons">
+            ${p.whatsapp1 ? `<a href="https://wa.me/${p.whatsapp1}" target="_blank" rel="noopener noreferrer">WhatsApp 1</a>` : ''}
+            ${p.whatsapp2 ? `<a href="https://wa.me/${p.whatsapp2}" target="_blank" rel="noopener noreferrer">WhatsApp 2</a>` : ''}
+            ${p.telegram ? `<a href="${p.telegram}" target="_blank" rel="noopener noreferrer">Telegram</a>` : ''}
+            ${p.instagram ? `<a href="${p.instagram}" target="_blank" rel="noopener noreferrer">Instagram</a>` : ''}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Кнопка каталога внизу открывает каталог
+    document.getElementById('catalogBtn').addEventListener('click', () => {
+      showCategories();
+      showAllCatalogBlocks(true);
+      breadcrumbs.style.display = 'block';
+      currentPath = [];
+      showBreadcrumbs(currentPath);
+      // Скрываем слайдер и другие элементы, если нужно
+      document.querySelector('.slider').style.display = 'none';
     });
 
-    // Установка PWA (кнопка "Установить")
-    let deferredPrompt;
-    const installBtn = document.getElementById('installApp');
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      installBtn.style.display = 'inline-block';
-    });
-
-    installBtn.addEventListener('click', () => {
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choiceResult) => {
-          if (choiceResult.outcome === 'accepted') {
-            console.log('Пользователь согласился установить приложение');
-          } else {
-            console.log('Пользователь отказался от установки');
-          }
-          deferredPrompt = null;
-          installBtn.style.display = 'none';
-        });
-      }
-    });
   </script>
 </body>
 </html>
