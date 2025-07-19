@@ -5,68 +5,61 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>МаксМаркет</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
     body {
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      background: #fff0f6;
-      color: #4B004B;
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      background: #f4f4f4;
     }
     header {
-      background: #E0218A;
+      background: #333;
       color: white;
-      padding: 15px 20px;
+      padding: 15px;
       text-align: center;
-      font-size: 26px;
-      font-family: 'Lobster', cursive;
+      font-size: 24px;
     }
     nav.bottom-menu {
       position: fixed;
       bottom: 0; left: 0; right: 0;
-      background: #fff;
+      background: #333;
       display: flex;
       justify-content: space-around;
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-      z-index: 1000;
     }
-    nav.bottom-menu button {
-      flex: 1;
-      padding: 12px 5px;
-      border: none;
-      background: none;
-      font-size: 16px;
-      color: #e63946;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    nav.bottom-menu button.active {
+    nav.bottom-menu a {
       color: white;
-      background: #E0218A;
-      border-radius: 10px 10px 0 0;
+      padding: 15px;
+      text-decoration: none;
+      font-weight: bold;
+      flex-grow: 1;
+      text-align: center;
+    }
+    nav.bottom-menu a.active {
+      background: #555;
     }
     main {
       padding: 20px;
-      padding-bottom: 80px; /* место под меню */
+      padding-bottom: 70px; /* место для меню */
     }
-    section {
+    .hidden {
       display: none;
     }
-    section.active {
-      display: block;
-      animation: fadeIn 0.3s ease-in;
-    }
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
-    }
-    .product {
+    .product, .category, .subcategory, .subsubcategory {
       background: white;
       margin: 10px;
       padding: 10px;
-      border-radius: 8px;
-      box-shadow: 0 0 8px #f8c6e0;
+      border-radius: 5px;
+      box-shadow: 0 0 5px #aaa;
+      cursor: pointer;
+      max-width: 200px;
+      word-wrap: break-word;
+    }
+    .list-container {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .product img {
+      max-width: 100%;
+      border-radius: 5px;
+      margin-bottom: 8px;
     }
   </style>
 </head>
@@ -75,79 +68,25 @@
   <header>МаксМаркет</header>
 
   <main>
-    <section id="home" class="active">
-      <h2>🌸 Добро пожаловать в Магазин Максалины</h2>
-      <div class="product">Тут будут последние товары</div>
+    <section id="home-section">
+      <h2>Последние товары</h2>
+      <div id="products-list" class="list-container"></div>
     </section>
 
-    <section id="catalog">
-      <h2>🛒 Каталог</h2>
-      <div class="product">Категории и товары появятся здесь</div>
-    </section>
-
-    <section id="contacts">
-      <h2>📞 Контакты</h2>
-      <p>WhatsApp: <a href="https://wa.me/7923XXXXXXX">написать</a></p>
-    </section>
-
-    <section id="delivery">
-      <h2>🚖 Доставка</h2>
-      <p>Мы доставляем по всей стране! Подробности скоро...</p>
-    </section>
-
-    <section id="favorites">
-      <h2>❤️ Избранное</h2>
-      <p>Здесь будут ваши любимые товары</p>
-    </section>
-
-    <section id="adress">
-      <h2>📍 Адрес</h2>
-      <p>Наш склад находится в городе...</p>
-    </section>
-
-    <section id="rules">
-      <h2>📝 Условия</h2>
-      <p>Правила покупки, возврата и доставки</p>
-    </section>
-
-    <section id="reviews">
-      <h2>🏆 Отзывы</h2>
-      <p>Отзывы покупателей скоро появятся</p>
+    <section id="catalog-section" class="hidden">
+      <h2>Каталог</h2>
+      <div id="categories-list" class="list-container"></div>
+      <div id="subcategories-list" class="list-container"></div>
+      <div id="subsubcategories-list" class="list-container"></div>
+      <div id="catalog-products-list" class="list-container"></div>
     </section>
   </main>
 
   <nav class="bottom-menu">
-    <button data-target="home" class="active">Главная</button>
-    <button data-target="catalog">Каталог</button>
-    <button data-target="contacts">Контакты</button>
-    <button data-target="delivery">Доставка</button>
-    <button data-target="favorites">Избранное</button>
-    <button data-target="adress">Адрес</button>
-    <button data-target="rules">Условия</button>
-    <button data-target="reviews">Отзывы</button>
+    <a href="#" id="nav-home" class="active">Главная</a>
+    <a href="#" id="nav-catalog">Каталог</a>
   </nav>
 
-  <script>
-    const buttons = document.querySelectorAll('nav.bottom-menu button');
-    const sections = document.querySelectorAll('main section');
-
-    buttons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        // Меняем активную кнопку
-        buttons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        // Показываем нужный раздел
-        const target = btn.dataset.target;
-        sections.forEach(sec => {
-          sec.classList.remove('active');
-          if (sec.id === target) {
-            sec.classList.add('active');
-          }
-        });
-      });
-    });
-  </script>
-
+  <script type="module" src="scripts/app.js"></script>
 </body>
 </html>
