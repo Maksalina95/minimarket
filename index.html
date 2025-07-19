@@ -1,52 +1,28 @@
-// Импортируем baseUrl из config.js
-import { baseUrl } from './config.js';
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>МаксМаркет</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>МаксМаркет</h1>
+    <nav>
+      <a href="#home">Главная</a>
+      <a href="#catalog">Каталог</a>
+    </nav>
+  </header>
 
-document.addEventListener("DOMContentLoaded", () => {
-  loadProducts(); // Загружаем начальный список товаров
-  loadPage();     // Загружаем страницу по текущему хешу
-});
+  <main id="products">
+    <p>Загрузка товаров...</p>
+  </main>
 
-window.addEventListener("hashchange", loadPage);
+  <footer>
+    <p>&copy; МаксМаркет</p>
+  </footer>
 
-// Функция загрузки товаров
-async function loadProducts() {
-  const container = document.getElementById('products');
-  if (!container) return;
-
-  try {
-    const res = await fetch(baseUrl);
-    const data = await res.json();
-
-    container.innerHTML = ''; // Очищаем перед загрузкой
-
-    data.forEach(item => {
-      // Пропускаем товары без изображения
-      if (!item.изображение) return;
-
-      const card = document.createElement('div');
-      card.className = 'product-card';
-
-      card.innerHTML = `
-        <img src="${item.изображение}" alt="${item.название}" />
-        <h3>${item.название || ''}</h3>
-        <p>${item.описание || ''}</p>
-        <strong>${item.цена ? item.цена + ' ₽' : ''}</strong>
-      `;
-
-      container.appendChild(card);
-    });
-  } catch (err) {
-    console.error('Ошибка при загрузке товаров:', err);
-    container.innerHTML = '<p>Не удалось загрузить товары. Попробуйте позже.</p>';
-  }
-}
-
-// Функция загрузки нужной страницы по hash (если у тебя одностраничный сайт)
-function loadPage() {
-  const page = location.hash.replace('#', '') || 'home';
-  const sections = document.querySelectorAll('section[data-page]');
-
-  sections.forEach(section => {
-    section.style.display = (section.dataset.page === page) ? 'block' : 'none';
-  });
-}
+  <script type="module" src="scripts/app.js"></script>
+</body>
+</html>
