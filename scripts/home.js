@@ -7,11 +7,11 @@ export async function showHome(container) {
   const list = document.getElementById("products");
 
   data.forEach(item => {
-    if (!item["фото"]) return;
+    if (!item["изображение"]) return;
     const block = document.createElement("div");
     block.className = "product";
     block.innerHTML = `
-      <img src="${item["фото"]}" alt="${item["название"]}" />
+      <img src="${item["изображение"]}" alt="${item["название"]}" />
       <h3>${item["название"]}</h3>
       <p>${item["описание"]}</p>
       <strong>${item["цена"]} ₽</strong>
