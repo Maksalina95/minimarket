@@ -40,3 +40,13 @@ nav a {
 nav a.active {
   color: #007bff;
 }
+
+.subcategory-btn {
+  display: block;
+  background: #f0f0f0;
+  border: 1px solid #bbb;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
