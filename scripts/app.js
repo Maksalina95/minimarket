@@ -1,53 +1,55 @@
+// app.js
 import { baseUrl } from './config.js';
 
-// Загружаем данные из таблицы
-async function fetchData() {
-  const response = await fetch(baseUrl);
-  const data = await response.json();
-  return data;
-}
+document.addEventListener("DOMContentLoaded", () => {
+  loadProducts(); // Загружаем товары на главную
+  loadPage();     // Загружаем страницу по хешу (если есть)
+});
 
-// Загружаем последние товары на главную
-export async function loadMain() {
-  const container = document.getElementById('content');
-  container.innerHTML = '<p>Загрузка товаров...</p>';
+window.addEventListener("hashchange", loadPage);
 
-  try {
-    const data = await fetchData();
+// Загрузка товаров из Google Таблицы
+function loadProducts() {
+  const container = document.getElementById('main-content');
+  container.innerHTML = `<h2 class="title">Новинки</h2><div class="products" id="products"></div>`;
 
-    const reversed = [...data].reverse(); // показываем последние товары
-    const items = reversed
-      .filter(item => item.фото) // только с фото
-      .map(item => `
-        <div class="product">
-          <img src="${item.фото}" alt="${item.название}" width="200" />
+  fetch(baseUrl)
+    .then(res => res.json())
+    .then(data => {
+      const productsEl = document.getElementById('products');
+      data.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${item.фото}" alt="${item.название}" />
           <h3>${item.название}</h3>
           <p>${item.цена} ₽</p>
-        </div>
-      `)
-      .join('');
-
-    container.innerHTML = `<div class="products">${items}</div>`;
-  } catch (error) {
-    container.innerHTML = `<p>Ошибка загрузки: ${error.message}</p>`;
-  }
+        `;
+        productsEl.appendChild(card);
+      });
+    })
+    .catch(error => {
+      container.innerHTML = `<p>Ошибка загрузки товаров 😢</p>`;
+      console.error('Ошибка загрузки:', error);
+    });
 }
 
-// Загрузка категорий (пока просто выводим список уникальных)
-export async function loadCatalog() {
-  const container = document.getElementById('content');
-  container.innerHTML = '<p>Загрузка категорий...</p>';
+function loadPage() {
+  const page = location.hash.slice(1);
+  const panel = document.getElementById('slide-panel');
+  if (!page) return;
 
-  try {
-    const data = await fetchData();
-    const categories = [...new Set(data.map(item => item.категория).filter(Boolean))];
-
-    const list = categories
-      .map(cat => `<div class="category">${cat}</div>`)
-      .join('');
-
-    container.innerHTML = `<h2>Категории</h2>${list}`;
-  } catch (error) {
-    container.innerHTML = `<p>Ошибка загрузки: ${error.message}</p>`;
-  }
+  fetch(`${page}.html`)
+    .then(res => res.text())
+    .then(html => {
+      panel.innerHTML = html;
+      panel.classList.add('open');
+    })
+    .catch(() => {
+      panel.innerHTML = '<p>Страница не найдена.</p>';
+    });
 }
+
+document.getElementById('close-btn').addEventListener('click', () => {
+  document.getElementById('slide-panel').classList.remove('open');
+});
