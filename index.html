@@ -4,242 +4,150 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>МаксМаркет</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="icon" href="icons/icon-192.png" type="image/png" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Lobster&display=swap"
-    rel="stylesheet"
-  />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: #fff0f6;
+      color: #4B004B;
+    }
+    header {
+      background: #E0218A;
+      color: white;
+      padding: 15px 20px;
+      text-align: center;
+      font-size: 26px;
+      font-family: 'Lobster', cursive;
+    }
+    nav.bottom-menu {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: #fff;
+      display: flex;
+      justify-content: space-around;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+    nav.bottom-menu button {
+      flex: 1;
+      padding: 12px 5px;
+      border: none;
+      background: none;
+      font-size: 16px;
+      color: #e63946;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    nav.bottom-menu button.active {
+      color: white;
+      background: #E0218A;
+      border-radius: 10px 10px 0 0;
+    }
+    main {
+      padding: 20px;
+      padding-bottom: 80px; /* место под меню */
+    }
+    section {
+      display: none;
+    }
+    section.active {
+      display: block;
+      animation: fadeIn 0.3s ease-in;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+    .product {
+      background: white;
+      margin: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 0 8px #f8c6e0;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1 class="logo">МаксМаркет</h1>
-    <button id="installApp" class="install-button" style="display:none;">📲 Установить</button>
-  </header>
 
-  <div class="search-bar">
-    <form class="search-form" onsubmit="return false;">
-      <input type="text" id="searchInput" placeholder="Найти на МаксМаркет" />
-      <span id="clearSearch">✕</span>
-      <button type="submit" id="applySearchBtn">Поиск</button>
-    </form>
-  </div>
+  <header>МаксМаркет</header>
 
-  <section class="slider">
-    <div class="slide active">🌸 Добро пожаловать в Магазин Максалины!</div>
-    <div class="slide">📢 Здесь могла бы быть ваша РЕКЛАМА</div>
-  </section>
+  <main>
+    <section id="home" class="active">
+      <h2>🌸 Добро пожаловать в Магазин Максалины</h2>
+      <div class="product">Тут будут последние товары</div>
+    </section>
 
-  <!-- Навигация хлебные крошки -->
-  <nav id="breadcrumbs" aria-label="Хлебные крошки" style="display:none;"></nav>
+    <section id="catalog">
+      <h2>🛒 Каталог</h2>
+      <div class="product">Категории и товары появятся здесь</div>
+    </section>
 
-  <!-- Основной контент -->
-  <main id="mainContent">
-    <h2>Новинки</h2>
-    <ul id="suggestions"></ul>
-    <div id="categoryList"></div>
-    <div id="subcategoryList"></div>
-    <div id="subsubcategoryList"></div>
-    <div id="productList" class="product-list"></div>
+    <section id="contacts">
+      <h2>📞 Контакты</h2>
+      <p>WhatsApp: <a href="https://wa.me/7923XXXXXXX">написать</a></p>
+    </section>
+
+    <section id="delivery">
+      <h2>🚖 Доставка</h2>
+      <p>Мы доставляем по всей стране! Подробности скоро...</p>
+    </section>
+
+    <section id="favorites">
+      <h2>❤️ Избранное</h2>
+      <p>Здесь будут ваши любимые товары</p>
+    </section>
+
+    <section id="adress">
+      <h2>📍 Адрес</h2>
+      <p>Наш склад находится в городе...</p>
+    </section>
+
+    <section id="rules">
+      <h2>📝 Условия</h2>
+      <p>Правила покупки, возврата и доставки</p>
+    </section>
+
+    <section id="reviews">
+      <h2>🏆 Отзывы</h2>
+      <p>Отзывы покупателей скоро появятся</p>
+    </section>
   </main>
 
-  <div class="bottom-icons" role="navigation" aria-label="Основное меню">
-    <button data-title="Главная" data-url="home.html" aria-label="Главная">🏠<span class="tooltip">Главная</span></button>
-    <button data-title="Каталог" id="catalogBtn" aria-label="Каталог">🛒<span class="tooltip">Каталог</span></button>
-    <button data-title="Контакты" data-url="contacts.html" aria-label="Контакты">📞<span class="tooltip">Контакты</span></button>
-    <button data-title="Доставка" data-url="delivery.html" aria-label="Доставка">🚖<span class="tooltip">Доставка</span></button>
-    <button data-title="Избранное" data-url="favorites.html" aria-label="Избранное">❤️<span class="tooltip">Избранное</span></button>
-    <button data-title="Адрес" data-url="adress.html" aria-label="Адрес">📍<span class="tooltip">Адрес</span></button>
-    <button data-title="Условия" data-url="rules.html" aria-label="Условия">📝<span class="tooltip">Условия</span></button>
-    <button data-title="Отзывы" data-url="reviews.html" aria-label="Отзывы">🏆<span class="tooltip">Отзывы</span></button>
-    <button onclick="location.reload()" aria-label="Обновить">🔄<span class="tooltip">Обновить</span></button>
-  </div>
-
-  <!-- Подключаем твои скрипты конфиг и каталог -->
-  <script src="скрипты/конфиг.js"></script>
-  <script src="скрипты/каталог.js"></script>
+  <nav class="bottom-menu">
+    <button data-target="home" class="active">Главная</button>
+    <button data-target="catalog">Каталог</button>
+    <button data-target="contacts">Контакты</button>
+    <button data-target="delivery">Доставка</button>
+    <button data-target="favorites">Избранное</button>
+    <button data-target="adress">Адрес</button>
+    <button data-target="rules">Условия</button>
+    <button data-target="reviews">Отзывы</button>
+  </nav>
 
   <script>
-    // Навигация и управление каталогом
-    const breadcrumbs = document.getElementById('breadcrumbs');
-    const categoryList = document.getElementById('categoryList');
-    const subcategoryList = document.getElementById('subcategoryList');
-    const subsubcategoryList = document.getElementById('subsubcategoryList');
-    const productList = document.getElementById('productList');
+    const buttons = document.querySelectorAll('nav.bottom-menu button');
+    const sections = document.querySelectorAll('main section');
 
-    // Инициализация - показываем категории при загрузке
-    loadCatalogData().then(() => {
-      showCategories();
-      showBreadcrumbs([]);
-      showAllCatalogBlocks(false);
-    });
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Меняем активную кнопку
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
 
-    // Показываем или прячем блоки каталога
-    function showAllCatalogBlocks(show) {
-      categoryList.style.display = show ? 'block' : 'none';
-      subcategoryList.style.display = show ? 'block' : 'none';
-      subsubcategoryList.style.display = show ? 'block' : 'none';
-      productList.style.display = show ? 'block' : 'none';
-    }
-
-    // Отображаем хлебные крошки
-    function showBreadcrumbs(path) {
-      if (!path.length) {
-        breadcrumbs.style.display = 'none';
-        return;
-      }
-      breadcrumbs.style.display = 'block';
-      breadcrumbs.innerHTML = '';
-      path.forEach((item, i) => {
-        if (i < path.length - 1) {
-          const a = document.createElement('a');
-          a.textContent = item.name;
-          a.href = '#';
-          a.onclick = (e) => {
-            e.preventDefault();
-            navigateTo(i);
-          };
-          breadcrumbs.appendChild(a);
-          const sep = document.createElement('span');
-          sep.textContent = '›';
-          breadcrumbs.appendChild(sep);
-        } else {
-          const span = document.createElement('span');
-          span.textContent = item.name;
-          breadcrumbs.appendChild(span);
-        }
+        // Показываем нужный раздел
+        const target = btn.dataset.target;
+        sections.forEach(sec => {
+          sec.classList.remove('active');
+          if (sec.id === target) {
+            sec.classList.add('active');
+          }
+        });
       });
-    }
-
-    // Хранение пути навигации
-    let currentPath = [];
-
-    // Навигация по уровню
-    function navigateTo(level) {
-      currentPath = currentPath.slice(0, level + 1);
-      updateCatalogByPath();
-    }
-
-    // Обновляем контент в каталоге по пути currentPath
-    function updateCatalogByPath() {
-      if (currentPath.length === 0) {
-        showCategories();
-      } else if (currentPath.length === 1) {
-        showSubcategories(currentPath[0].name);
-      } else if (currentPath.length === 2) {
-        showSubsubcategories(currentPath[0].name, currentPath[1].name);
-      } else if (currentPath.length === 3) {
-        showProducts(currentPath[0].name, currentPath[1].name, currentPath[2].name);
-      }
-      showBreadcrumbs(currentPath);
-      showAllCatalogBlocks(true);
-    }
-
-    // Обработчики кликов из твоих функций каталога
-    function showCategories() {
-      const categories = [...new Set(allData.map(p => p.категория).filter(Boolean))];
-      categoryList.innerHTML = categories.map(cat =>
-        `<button class="catalog-button" onclick="onCategoryClick('${cat}')">${cat}</button>`
-      ).join('');
-      subcategoryList.innerHTML = '';
-      subsubcategoryList.innerHTML = '';
-      productList.innerHTML = '';
-      showAllCatalogBlocks(true);
-      currentPath = [];
-      showBreadcrumbs(currentPath);
-    }
-
-    function onCategoryClick(cat) {
-      currentPath = [{name: cat}];
-      updateCatalogByPath();
-    }
-
-    function showSubcategories(category) {
-      const subcategories = [...new Set(allData
-        .filter(p => p.категория === category)
-        .map(p => p.подкатегория)
-        .filter(Boolean)
-      )];
-      subcategoryList.innerHTML = subcategories.map(sub =>
-        `<button class="catalog-button" onclick="onSubcategoryClick('${category}', '${sub}')">${sub}</button>`
-      ).join('');
-      subsubcategoryList.innerHTML = '';
-      productList.innerHTML = '';
-    }
-
-    function onSubcategoryClick(category, subcat) {
-      currentPath = [{name: category}, {name: subcat}];
-      updateCatalogByPath();
-    }
-
-    function showSubsubcategories(category, subcategory) {
-      const subsubcategories = [...new Set(allData
-        .filter(p => p.категория === category && p.подкатегория === subcategory)
-        .map(p => p.подподкатегория)
-        .filter(Boolean)
-      )];
-      if (subsubcategories.length) {
-        subsubcategoryList.innerHTML = subsubcategories.map(sub =>
-          `<button class="catalog-button" onclick="onSubsubcategoryClick('${category}', '${subcategory}', '${sub}')">${sub}</button>`
-        ).join('');
-        productList.innerHTML = '';
-      } else {
-        // Если подподкатегорий нет, показываем товары сразу
-        subsubcategoryList.innerHTML = '';
-        showProducts(category, subcategory, null);
-      }
-    }
-
-    function onSubsubcategoryClick(category, subcat, subsubcat) {
-      currentPath = [{name: category}, {name: subcat}, {name: subsubcat}];
-      updateCatalogByPath();
-    }
-
-    function showProducts(category, subcategory, subsubcategory) {
-      const products = allData.filter(p =>
-        p.категория === category &&
-        p.подкатегория === subcategory &&
-        (subsubcategory ? p.подподкатегория === subsubcategory : true)
-      );
-      renderProductList(products, productList);
-    }
-
-    function renderProductList(products, container) {
-      if (!container) return;
-
-      if (products.length === 0) {
-        container.innerHTML = '<p>Товаров нет</p>';
-        return;
-      }
-
-      container.innerHTML = products.map(p => `
-        <div class="product-card">
-          ${p.фото ? `<img src="${p.фото}" alt="${p.название}" loading="lazy" />` : ''}
-          <h3>${p.название || ''}</h3>
-          <p>${p.описание || ''}</p>
-          <p><strong>${p.цена || ''}</strong></p>
-          <div class="buttons">
-            ${p.whatsapp1 ? `<a href="https://wa.me/${p.whatsapp1}" target="_blank" rel="noopener noreferrer">WhatsApp 1</a>` : ''}
-            ${p.whatsapp2 ? `<a href="https://wa.me/${p.whatsapp2}" target="_blank" rel="noopener noreferrer">WhatsApp 2</a>` : ''}
-            ${p.telegram ? `<a href="${p.telegram}" target="_blank" rel="noopener noreferrer">Telegram</a>` : ''}
-            ${p.instagram ? `<a href="${p.instagram}" target="_blank" rel="noopener noreferrer">Instagram</a>` : ''}
-          </div>
-        </div>
-      `).join('');
-    }
-
-    // Кнопка каталога внизу открывает каталог
-    document.getElementById('catalogBtn').addEventListener('click', () => {
-      showCategories();
-      showAllCatalogBlocks(true);
-      breadcrumbs.style.display = 'block';
-      currentPath = [];
-      showBreadcrumbs(currentPath);
-      // Скрываем слайдер и другие элементы, если нужно
-      document.querySelector('.slider').style.display = 'none';
     });
-
   </script>
+
 </body>
 </html>
