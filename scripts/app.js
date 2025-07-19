@@ -1,35 +1,51 @@
-import { baseUrl } from './config.js';
-
-async function loadProducts() {
-  const container = document.getElementById('products');
-  if (!container) return;
-
-  try {
-    const res = await fetch(baseUrl);
-    const data = await res.json();
-
-    container.innerHTML = ''; // Очищаем перед подгрузкой
-
-    data.forEach(item => {
-      // Если нет изображения — не показываем товар
-      if (!item.изображение) return;
-
-      const card = document.createElement('div');
-      card.className = 'product-card';
-
-      card.innerHTML = `
-        <img src="${item.изображение}" alt="${item.название}" />
-        <h3>${item.название || ''}</h3>
-        <p>${item.описание || ''}</p>
-        <strong>${item.цена ? item.цена + ' ₽' : ''}</strong>
-      `;
-
-      container.appendChild(card);
-    });
-  } catch (err) {
-    console.error('Ошибка при загрузке товаров:', err);
-    container.innerHTML = '<p>Не удалось загрузить товары. Попробуйте позже.</p>';
-  }
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #fefefe;
 }
 
-document.addEventListener("DOMContentLoaded", loadProducts);
+header {
+  background: #e91e63;
+  color: white;
+  padding: 15px;
+  text-align: center;
+}
+
+nav a {
+  color: white;
+  margin: 0 10px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+main {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.product-card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.product-card img {
+  max-width: 100%;
+  border-radius: 10px;
+  height: 200px;
+  object-fit: cover;
+}
+
+footer {
+  text-align: center;
+  padding: 10px;
+  background: #eee;
+  color: #333;
+  font-size: 14px;
+}
