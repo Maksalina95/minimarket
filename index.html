@@ -1,28 +1,21 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>МаксМаркет</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <header>
-    <h1>МаксМаркет</h1>
-    <nav>
-      <a href="#home">Главная</a>
-      <a href="#catalog">Каталог</a>
-    </nav>
-  </header>
+// scripts/home.js
+import { fetchSheetData } from "./config.js";
 
-  <main id="products">
-    <p>Загрузка товаров...</p>
-  </main>
+export async function showHome(container) {
+  container.innerHTML = "<h2>Товары</h2><div id='products'></div>";
+  const data = await fetchSheetData();
+  const list = document.getElementById("products");
 
-  <footer>
-    <p>&copy; МаксМаркет</p>
-  </footer>
-
-  <script type="module" src="scripts/app.js"></script>
-</body>
-</html>
+  data.forEach(item => {
+    if (!item["фото"]) return;
+    const block = document.createElement("div");
+    block.className = "product";
+    block.innerHTML = `
+      <img src="${item["фото"]}" alt="${item["название"]}" />
+      <h3>${item["название"]}</h3>
+      <p>${item["описание"]}</p>
+      <strong>${item["цена"]} ₽</strong>
+    `;
+    list.appendChild(block);
+  });
+}
