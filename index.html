@@ -5,22 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>МаксМаркет</title>
   <link rel="stylesheet" href="style.css" />
-  <link rel="manifest" href="manifest.json" />
 </head>
 <body>
   <header>
     <h1>МаксМаркет</h1>
+    <nav>
+      <a href="#">Главная</a>
+      <a href="#catalog">Каталог</a>
+    </nav>
   </header>
 
-  <main id="main-content">
-    <!-- Здесь будет отображаться содержимое -->
+  <main>
+    <section id="products">
+      <p>Загрузка товаров...</p>
+    </section>
   </main>
 
-  <nav class="bottom-nav">
-    <button onclick="navigateTo('home')">Главная</button>
-    <button onclick="navigateTo('catalog')">Каталог</button>
-  </nav>
-
-  <script type="module" src="scripts/app.js"></script>
+  <script type="module">
+    import { baseUrl } from './scripts/config.js';
+    import { loadProducts } from './scripts/app.js';
+    window.addEventListener('DOMContentLoaded', loadProducts);
+  </script>
 </body>
 </html>
