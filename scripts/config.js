@@ -1,6 +1,6 @@
 // scripts/config.js
 
-const SHEET_ID = "1gBcuPzWv_nH2i7sWyCaERVCjO-hLg8EcndPkEMlNqgw";
+const SHEET_ID = "1D0VRNDIEgh1WFPNHNDiF5-Oncdw0Q7Zb3KHbk1LO_08";
 const SHEET_NAME = "Sheet1";
 const URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${SHEET_NAME}&tqx=out:json`;
 
