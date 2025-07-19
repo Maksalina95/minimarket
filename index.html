@@ -2,91 +2,25 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>МаксМаркет</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0; padding: 0;
-      background: #f4f4f4;
-    }
-    header {
-      background: #333;
-      color: white;
-      padding: 15px;
-      text-align: center;
-      font-size: 24px;
-    }
-    nav.bottom-menu {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      background: #333;
-      display: flex;
-      justify-content: space-around;
-    }
-    nav.bottom-menu a {
-      color: white;
-      padding: 15px;
-      text-decoration: none;
-      font-weight: bold;
-      flex-grow: 1;
-      text-align: center;
-    }
-    nav.bottom-menu a.active {
-      background: #555;
-    }
-    main {
-      padding: 20px;
-      padding-bottom: 70px; /* место для меню */
-    }
-    .hidden {
-      display: none;
-    }
-    .product, .category, .subcategory, .subsubcategory {
-      background: white;
-      margin: 10px;
-      padding: 10px;
-      border-radius: 5px;
-      box-shadow: 0 0 5px #aaa;
-      cursor: pointer;
-      max-width: 200px;
-      word-wrap: break-word;
-    }
-    .list-container {
-      display: flex;
-      flex-wrap: wrap;
-    }
-    .product img {
-      max-width: 100%;
-      border-radius: 5px;
-      margin-bottom: 8px;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <h1>🛍️ МаксМаркет</h1>
 
-  <header>МаксМаркет</header>
-
-  <main>
-    <section id="home-section">
-      <h2>Последние товары</h2>
-      <div id="products-list" class="list-container"></div>
-    </section>
-
-    <section id="catalog-section" class="hidden">
-      <h2>Каталог</h2>
-      <div id="categories-list" class="list-container"></div>
-      <div id="subcategories-list" class="list-container"></div>
-      <div id="subsubcategories-list" class="list-container"></div>
-      <div id="catalog-products-list" class="list-container"></div>
-    </section>
-  </main>
-
-  <nav class="bottom-menu">
-    <a href="#" id="nav-home" class="active">Главная</a>
-    <a href="#" id="nav-catalog">Каталог</a>
+  <nav>
+    <button onclick="loadMain()">Главная</button>
+    <button onclick="loadCatalog()">Каталог</button>
   </nav>
 
-  <script type="module" src="scripts/app.js"></script>
+  <main id="content">
+    <p>Загрузка...</p>
+  </main>
+
+  <script type="module">
+    import { loadMain, loadCatalog } from './scripts/app.js';
+    loadMain(); // Загружаем главную при открытии сайта
+  </script>
 </body>
 </html>
