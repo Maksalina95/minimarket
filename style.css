@@ -1,52 +1,181 @@
-body {
-  font-family: sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Lobster&display=swap');
+
+/* Сброс и глобальные стили */
+* {
+  box-sizing: border-box;
   margin: 0;
-  padding-bottom: 60px;
+  padding: 0;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #fff;
+  color: #333;
+  line-height: 1.6;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+img {
+  max-width: 100%;
+  display: block;
 }
 
-#content {
-  padding: 20px;
+/* Контейнер */
+.container {
+  padding: 16px;
+  max-width: 1200px;
+  margin: auto;
 }
 
-.product img {
-  width: 100%;
-  max-height: 200px;
-  object-fit: cover;
-}
-
-.product, .category {
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 15px;
-  padding-bottom: 10px;
-}
-
-nav {
+/* Хедер и нижнее меню */
+header, footer {
+  background: #fff;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
   position: fixed;
-  bottom: 0;
   width: 100%;
-  background: #eee;
+  z-index: 10;
+}
+header {
+  top: 0;
+  padding: 10px 16px;
+}
+footer {
+  bottom: 0;
   display: flex;
   justify-content: space-around;
   padding: 10px 0;
-  border-top: 1px solid #ccc;
+}
+footer button {
+  font-size: 14px;
+  padding: 6px 10px;
+  background: #f8f8f8;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+footer button.active,
+footer button:hover {
+  background: #2b8cff;
+  color: white;
 }
 
-nav a {
-  text-decoration: none;
-  color: #333;
-  font-weight: bold;
+/* Скрытие всех блоков по умолчанию */
+.page {
+  display: none;
+  padding-top: 60px;
+  padding-bottom: 60px;
 }
-
-nav a.active {
-  color: #007bff;
-}
-
-.subcategory-btn {
+.page.active {
   display: block;
-  background: #f0f0f0;
-  border: 1px solid #bbb;
-  padding: 10px;
-  margin-bottom: 10px;
+}
+
+/* Поисковая строка */
+.search-bar {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  padding: 6px 12px;
+  background: #f2f2f2;
+}
+.search-bar input {
+  flex: 1;
+  padding: 8px 12px;
+  border: none;
+  outline: none;
+  background: transparent;
   font-size: 16px;
+}
+.search-bar button {
+  background: #2b8cff;
+  color: white;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+}
+.search-bar button:hover {
+  background: #007bff;
+}
+.search-clear {
+  display: none;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  margin-left: 6px;
+  color: #666;
+}
+.search-clear.visible {
+  display: inline;
+}
+
+/* Список автоподсказок */
+#suggestions {
+  margin-top: 8px;
+  list-style: none;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  max-height: 150px;
+  overflow-y: auto;
+}
+#suggestions li {
+  padding: 8px 12px;
   cursor: pointer;
+}
+#suggestions li:hover {
+  background: #f0f0f0;
+}
+
+/* Товары */
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+.product {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  overflow: hidden;
+  padding: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  text-align: center;
+}
+.product img {
+  height: 140px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.product h3 {
+  font-size: 16px;
+  margin: 8px 0 4px;
+}
+.product p {
+  font-size: 14px;
+  color: #666;
+}
+.product .price {
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+/* Адаптивность */
+@media (max-width: 600px) {
+  .search-bar {
+    flex-direction: row;
+    gap: 8px;
+  }
+  footer button {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
 }
