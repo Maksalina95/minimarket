@@ -1,27 +1,28 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <title>МаксМаркет</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="style.css" />
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Мой Магазин</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 </head>
-<body>
-
-  <!-- Общий заголовок -->
-  <header>
-    <h1>МаксМаркет</h1>
-
-    <!-- Поисковая строка -->
-    <div class="search-container">
-      <input type="text" id="searchInput" placeholder="Поиск товаров..." />
-      <button id="clearSearch" style="display:none;">×</button>
-      <button id="searchBtn">Найти</button>
-      <ul id="suggestions"></ul>
-    </div>
+  <!-- Заголовок и кнопка установки -->
+  <header class="header">
+    <h1 class="site-title">МаксМаркет</h1>
+    <button id="installButton" class="install-button">Установить</button>
   </header>
 
-  <!-- Контент, который будет меняться -->
+  <!-- Поисковая строка -->
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Поиск товаров..." />
+    <button id="clearSearch" style="display:none;">×</button>
+    <button id="searchBtn">Найти</button>
+    <ul id="suggestions"></ul>
+  </div>
+
+  <!-- Контент -->
   <div id="content"></div>
 
   <!-- Навигация -->
@@ -30,7 +31,15 @@
     <a href="#" data-page="catalog">Каталог</a>
   </nav>
 
-  <!-- Основной скрипт SPA -->
+  <!-- Скрипты -->
   <script type="module" src="scripts/app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(() => console.log("SW зарегистрирован"))
+        .catch(err => console.log("SW ошибка", err));
+    }
+  </script>
+
 </body>
 </html>
