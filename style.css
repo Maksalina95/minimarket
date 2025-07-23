@@ -1,181 +1,216 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:wght@400;600&family=Playfair+Display:wght@600&display=swap');
 
-/* Сброс и глобальные стили */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
+
 body {
   font-family: 'Poppins', sans-serif;
-  background: #fff;
+  background-color: #fef7fa;
   color: #333;
-  line-height: 1.6;
-}
-a {
-  text-decoration: none;
-  color: inherit;
-}
-button {
-  font-family: inherit;
-  cursor: pointer;
-  border: none;
-  background: none;
-}
-img {
-  max-width: 100%;
-  display: block;
+  padding-bottom: 70px;
 }
 
-/* Контейнер */
-.container {
-  padding: 16px;
-  max-width: 1200px;
-  margin: auto;
-}
-
-/* Хедер и нижнее меню */
-header, footer {
-  background: #fff;
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-  position: fixed;
-  width: 100%;
-  z-index: 10;
-}
-header {
-  top: 0;
-  padding: 10px 16px;
-}
-footer {
-  bottom: 0;
+/* Заголовок */
+.header {
+  background-color: #ffffff;
+  padding: 12px 16px;
   display: flex;
-  justify-content: space-around;
-  padding: 10px 0;
-}
-footer button {
-  font-size: 14px;
-  padding: 6px 10px;
-  background: #f8f8f8;
-  border-radius: 8px;
-  transition: 0.2s;
-}
-footer button.active,
-footer button:hover {
-  background: #2b8cff;
-  color: white;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Скрытие всех блоков по умолчанию */
-.page {
-  display: none;
-  padding-top: 60px;
-  padding-bottom: 60px;
+.header-top {
+  position: relative;
+  padding: 12px 16px;
+  background-color: #fff0f7;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-.page.active {
-  display: block;
+
+.site-title {
+  font-size: 26px;
+  font-family: 'Lobster', cursive;
+  color: #D50B8B;
+}
+
+/* Кнопка "Установить" */
+.install-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 6px 10px;
+  font-size: 13px;
+  background-color: #D50B8B;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 999;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.install-button:hover {
+  background-color: #ff6db3;
+}
+
+.install-button:focus {
+  outline: 2px solid #ffb8da;
+  outline-offset: 2px;
 }
 
 /* Поисковая строка */
-.search-bar {
+.search-container {
   display: flex;
   align-items: center;
-  margin: 20px 0;
-  border: 1px solid #ccc;
-  border-radius: 30px;
-  padding: 6px 12px;
-  background: #f2f2f2;
+  justify-content: center;
+  gap: 8px;
+  max-width: 100%;
+  margin: 0 auto;
+  position: relative;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 10px;
 }
-.search-bar input {
+
+#searchInput {
   flex: 1;
-  padding: 8px 12px;
-  border: none;
-  outline: none;
-  background: transparent;
-  font-size: 16px;
-}
-.search-bar button {
-  background: #2b8cff;
-  color: white;
-  padding: 6px 16px;
-  border-radius: 20px;
+  min-width: 180px;
+  padding: 10px 36px 10px 12px;
+  border: 2px solid #ffcce5;
+  border-radius: 25px;
   font-size: 14px;
 }
-.search-bar button:hover {
-  background: #007bff;
+
+#searchBtn {
+  padding: 10px 16px;
+  background-color: #D50B8B;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 14px;
+  height: 40px;
 }
-.search-clear {
-  display: none;
-  background: transparent;
+
+#clearSearch {
+  position: absolute;
+  right: 120px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
   border: none;
   font-size: 20px;
-  margin-left: 6px;
-  color: #666;
-}
-.search-clear.visible {
-  display: inline;
-}
-
-/* Список автоподсказок */
-#suggestions {
-  margin-top: 8px;
-  list-style: none;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background: #fff;
-  max-height: 150px;
-  overflow-y: auto;
-}
-#suggestions li {
-  padding: 8px 12px;
+  color: #999;
   cursor: pointer;
 }
-#suggestions li:hover {
-  background: #f0f0f0;
+
+/* Подсказки */
+#suggestions {
+  list-style: none;
+  margin-top: 6px;
+  max-height: 160px;
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #ffcce5;
+  border-radius: 6px;
+  width: 250px;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
 }
 
-/* Товары */
-.products {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 12px;
-  margin-top: 16px;
+#suggestions li {
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
-.product {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  overflow: hidden;
-  padding: 8px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
-  text-align: center;
+
+#suggestions li:hover {
+  background-color: rgba(255, 228, 239, 0.7);
 }
-.product img {
-  height: 140px;
-  object-fit: cover;
-  border-radius: 8px;
+
+/* Контент */
+#content {
+  padding: 20px;
 }
-.product h3 {
-  font-size: 16px;
-  margin: 8px 0 4px;
+
+/* Навигация */
+nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: white;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.06);
 }
-.product p {
+
+nav a {
+  text-decoration: none;
+  color: #888;
   font-size: 14px;
-  color: #666;
+  transition: color 0.3s;
 }
-.product .price {
-  font-weight: 600;
-  margin-top: 4px;
+
+nav a.active,
+nav a:hover {
+  color: #D50B8B;
+  font-weight: bold;
 }
 
 /* Адаптивность */
-@media (max-width: 600px) {
-  .search-bar {
-    flex-direction: row;
-    gap: 8px;
-  }
-  footer button {
-    font-size: 12px;
-    padding: 5px 8px;
-  }
+img {
+  max-width: 100%;
+  height: auto;
 }
+
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+#content, header, nav {
+  max-width: 100%;
+  width: 100%;
+}
+
+#suggestions {
+  width: 100%;
+  max-width: 100%;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(4px);
+}
+
+@media screen and (max-width: 480px) {
+  header h1 {
+    font-size: 20px;
+  }
+
+  nav a {
+    font-size: 12px;
+  }
+
+  #clearSearch {
+    right: 20px;
+  }
+
+  #suggestions li {
+    font-size: 14px;
+  }
+  }
