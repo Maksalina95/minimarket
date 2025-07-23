@@ -50,6 +50,7 @@ export async function setupSearchGlobal() {
 
     if (!query) {
       suggestions.innerHTML = "";
+      suggestions.style.display = "none";
       return;
     }
 
@@ -58,21 +59,29 @@ export async function setupSearchGlobal() {
       item["описание"]?.toLowerCase().includes(query)
     );
 
-    suggestions.innerHTML = filtered.slice(0, 5).map(p => `
-      <li>${p["название"]}</li>
-    `).join("");
+    if (filtered.length === 0) {
+      suggestions.innerHTML = "<li>Ничего не найдено</li>";
+    } else {
+      suggestions.innerHTML = filtered.slice(0, 5).map(p => `
+        <li>${p["название"]}</li>
+      `).join("");
+    }
+
+    suggestions.style.display = "block";
   });
 
   clearBtn.addEventListener("click", () => {
     input.value = "";
     clearBtn.style.display = "none";
     suggestions.innerHTML = "";
+    suggestions.style.display = "none";
   });
 
   suggestions.addEventListener("click", e => {
     if (e.target.tagName === "LI") {
       input.value = e.target.textContent;
       suggestions.innerHTML = "";
+      suggestions.style.display = "none";
       search(input.value.toLowerCase());
     }
   });
@@ -81,7 +90,15 @@ export async function setupSearchGlobal() {
     const query = input.value.trim().toLowerCase();
     if (query) {
       suggestions.innerHTML = "";
+      suggestions.style.display = "none";
       search(query);
+    }
+  });
+
+  // Закрытие подсказок при клике вне
+  document.addEventListener("click", (e) => {
+    if (!suggestions.contains(e.target) && e.target !== input) {
+      suggestions.style.display = "none";
     }
   });
 }
