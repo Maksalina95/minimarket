@@ -1,6 +1,7 @@
 import { fetchSheetData } from "./config.js";  
-import { showProductPage, setProductData, setProductIndex } from "./productPage.js";  
-  
+import { setProductData, setProductIndex } from "./productPage.js";  
+import { loadPage } from "./app.js";
+
 export async function showHome(container) {  
   container.innerHTML = `  
     <h2>Товары</h2>  
@@ -30,7 +31,7 @@ function renderProducts(products, container) {
   
     block.addEventListener("click", () => {  
       setProductIndex(index);              // запоминаем индекс  
-      showProductPage(container, index);   // открываем карточку  
+      loadPage("product", index);          // открываем карточку товара через loadPage  
     });  
   
     list.appendChild(block);  
