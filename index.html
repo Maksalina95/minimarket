@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Мой Магазин</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <!-- Заголовок и кнопка установки -->
   <header class="header">
     <h1 class="site-title">МаксМаркет</h1>
-    <button id="installButton" class="install-button">Установить</button>
+    <button id="installBtn" class="install-button">Установить</button>
   </header>
 
-  <!-- Поисковая строка -->
   <div class="search-container">
     <input type="text" id="searchInput" placeholder="Поиск товаров..." />
     <button id="clearSearch" style="display:none;">×</button>
@@ -22,31 +20,35 @@
     <ul id="suggestions"></ul>
   </div>
 
-  <!-- Контент -->
   <div id="content"></div>
 
-  <!-- Навигация -->
   <nav>
     <a href="#" data-page="home" class="active">Главная</a>
     <a href="#" data-page="catalog">Каталог</a>
   </nav>
 
-  <!-- Скрипты -->
   <script type="module" src="scripts/app.js"></script>
 
-  <!-- Service Worker -->
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js')
-        .then(() => console.log("SW зарегистрирован"))
-        .catch(err => console.log("SW ошибка", err));
+      navigator.serviceWorker
+        .register('sw.js')
+        .then(() => console.log('SW зарегистрирован'))
+        .catch((err) => console.log('SW ошибка', err));
     }
 
-    // Обработка кнопки "назад"
-    window.addEventListener('popstate', () => {
-      const page = location.pathname === '/catalog' ? 'catalog' : 'home';
-      const navLink = document.querySelector(`nav a[data-page="${page}"]`);
-      if (navLink) navLink.click();
+    window.addEventListener('popstate', (event) => {
+      const state = event.state;
+
+      if (state && state.page) {
+        import('./scripts/app.js').then((module) => {
+          module.loadPage(state.page, state.data, true);
+        });
+      } else {
+        import('./scripts/app.js').then((module) => {
+          module.loadPage('home', null, true);
+        });
+      }
     });
   </script>
 </body>
