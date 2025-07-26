@@ -2,61 +2,72 @@ import { fetchSheetData } from "./config.js";
 import { showFilteredProducts } from "./filtered.js";
 
 export async function showCatalog(container) {
-container.innerHTML = "<h2>Категории</h2><div id='categories'></div>";
-const data = await fetchSheetData();
-const list = document.getElementById("categories");
+  // Перерисовываем всё с нуля
+  container.innerHTML = "<h2>Категории</h2><div id='categories'></div>";
 
-// Показываем поиск, т.к. мы в Каталоге
-const searchContainer = document.querySelector(".search-container");
-if (searchContainer) {
-searchContainer.style.display = "flex";
-}
+  const data = await fetchSheetData();
+  const list = document.getElementById("categories");
 
-const categories = [...new Set(data.map(item => item["категория"]).filter(Boolean))];
+  // Показываем поиск (если он есть)
+  const searchContainer = document.querySelector(".search-container");
+  if (searchContainer) {
+    searchContainer.style.display = "flex";
+  }
 
-categories.forEach(cat => {
-const btn = document.createElement("button");
-btn.className = "category-btn";
-btn.textContent = cat;
+  // Получаем уникальные категории (без пустых и undefined)
+  const categories = [...new Set(
+    data
+      .map(item => item["категория"]?.trim())
+      .filter(cat => !!cat)
+  )];
 
-btn.addEventListener("click", () => {  
-  showSubcategories(container, data, cat);  
-});  
+  list.innerHTML = ""; // очищаем перед отрисовкой
 
-list.appendChild(btn);
+  categories.forEach(cat => {
+    const btn = document.createElement("button");
+    btn.className = "category-btn";
+    btn.textContent = cat;
 
-});
+    btn.addEventListener("click", () => {
+      showSubcategories(container, data, cat);
+    });
+
+    list.appendChild(btn);
+  });
 }
 
 function showSubcategories(container, data, category) {
-container.innerHTML = `
-  <h2>${category}</h2>
-  <div id='subcategories'></div>
-  <button id="back">← Назад</button>
-`;
-const list = document.getElementById("subcategories");
+  container.innerHTML = `
+    <h2>${category}</h2>
+    <div id='subcategories'></div>
+    <button id="back">← Назад</button>
+  `;
+  const list = document.getElementById("subcategories");
 
-const subcats = [...new Set(
-data
-.filter(item => item["категория"] === category)
-.map(item => item["подкатегория"])
-.filter(Boolean)
-)];
+  // Получаем подкатегории без дублей и пустых
+  const subcats = [...new Set(
+    data
+      .filter(item => item["категория"]?.trim() === category)
+      .map(item => item["подкатегория"]?.trim())
+      .filter(Boolean)
+  )];
 
-subcats.forEach(sub => {
-const btn = document.createElement("button");
-btn.className = "subcategory-btn";
-btn.textContent = sub;
+  list.innerHTML = "";
 
-btn.addEventListener("click", () => {  
-  showFilteredProducts(container, category, sub);  
-});  
+  subcats.forEach(sub => {
+    const btn = document.createElement("button");
+    btn.className = "subcategory-btn";
+    btn.textContent = sub;
 
-list.appendChild(btn);
+    btn.addEventListener("click", () => {
+      showFilteredProducts(container, category, sub);
+    });
 
-});
+    list.appendChild(btn);
+  });
 
-document.getElementById("back").addEventListener("click", () => {
-showCatalog(container);
-});
+  // Назад в каталог
+  document.getElementById("back").addEventListener("click", () => {
+    showCatalog(container);
+  });
 }
