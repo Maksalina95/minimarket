@@ -37,18 +37,19 @@
         .catch((err) => console.log('SW ошибка', err));
     }
 
+    // popstate для кнопки "назад"
     window.addEventListener('popstate', (event) => {
       const state = event.state;
 
-      if (state && state.page) {
-        import('./scripts/app.js').then((module) => {
-          module.loadPage(state.page, state.data, true);
-        });
-      } else {
-        import('./scripts/app.js').then((module) => {
-          module.loadPage('home', null, true);
-        });
-      }
+      import('./scripts/app.js').then((module) => {
+        if (state?.page === 'product') {
+          module.loadPage('product', { container: document.getElementById('content'), index: state.index }, true);
+        } else if (state?.page === 'catalog') {
+          module.loadPage('catalog', { container: document.getElementById('content') }, true);
+        } else {
+          module.loadPage('home', { container: document.getElementById('content') }, true);
+        }
+      });
     });
   </script>
 </body>
