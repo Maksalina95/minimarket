@@ -1,4 +1,4 @@
-// --- Логика PWA: показ кнопки "Установить" ---
+// --- Логика PWA: кнопка установки ---
 let deferredPrompt;
 
 window.addEventListener('beforeinstallprompt', (e) => {
@@ -7,12 +7,10 @@ window.addEventListener('beforeinstallprompt', (e) => {
 
   const installBtn = document.getElementById('installBtn');
   if (installBtn) {
-    installBtn.style.display = 'block';
-
+    installBtn.style.display = 'inline-block';
     installBtn.addEventListener('click', async () => {
       installBtn.style.display = 'none';
       deferredPrompt.prompt();
-
       const { outcome } = await deferredPrompt.userChoice;
       console.log(`Пользователь выбрал: ${outcome}`);
       deferredPrompt = null;
@@ -40,7 +38,7 @@ function setActive(page) {
   if (activeLink) activeLink.classList.add("active");
 }
 
-async function loadPage(page, data = null, skipHistory = false) {
+export async function loadPage(page, data = null, skipHistory = false) {
   setActive(page);
 
   const searchContainer = document.querySelector(".search-container");
@@ -55,7 +53,6 @@ async function loadPage(page, data = null, skipHistory = false) {
     history.pushState({ page, data }, "", url);
   }
 
-  // Скрыть личный кабинет
   profilePage.style.display = 'none';
   welcomeUser.style.display = 'none';
 
@@ -66,14 +63,13 @@ async function loadPage(page, data = null, skipHistory = false) {
   } else if (page === "product") {
     await showProductPage(content, data);
   } else if (page === "profile") {
+    content.innerHTML = ""; // 👈 Очищаем контент товаров и прочего
     const user = JSON.parse(localStorage.getItem('user'));
     if (user) {
       profileName.textContent = 'Вы вошли как: ' + user.name;
       profilePhone.textContent = 'Ваш номер: ' + user.phone;
       profilePage.style.display = 'block';
     }
-  } else {
-    content.innerHTML = "<h2>Добро пожаловать!</h2>";
   }
 }
 
@@ -84,11 +80,13 @@ function showMainApp() {
 }
 
 function showWelcome(name) {
-  welcomeUser.textContent = `Здравствуйте, ${name}!`;
+  welcomeUser.textContent = `Добро пожаловать, ${name}!`;
   welcomeUser.style.display = 'block';
+  setTimeout(() => {
+    welcomeUser.style.display = 'none';
+  }, 3000);
 }
 
-// --- Запуск при загрузке ---
 document.addEventListener("DOMContentLoaded", () => {
   const user = JSON.parse(localStorage.getItem('user'));
 
@@ -124,6 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   setupSearchGlobal();
+
   window.onpopstate = (event) => {
     const state = event.state;
     if (state?.page === 'product') {
