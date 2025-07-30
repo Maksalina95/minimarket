@@ -1,12 +1,23 @@
-self.addEventListener("install", e => {
-  console.log("Service Worker installed");
-  self.skipWaiting();
-});
+const urlsToCache = [
+  '/',
+  '/index.html',
+  '/style.css',
+  '/manifest.json',
 
-self.addEventListener("activate", e => {
-  console.log("Service Worker activated");
-});
+  // JS скрипты
+  '/scripts/app.js',
+  '/scripts/catalog.js',
+  '/scripts/productPage.js',
+  '/scripts/home.js',
+  '/scripts/search.js',
+  '/scripts/config.js',
 
-self.addEventListener("fetch", event => {
-  event.respondWith(fetch(event.request));
-});
+  // Иконки и изображения
+  '/icons/icon-192.png',
+  '/icons/icon-512.png',
+  '/images/logo.png',       // если используешь в проекте
+
+  // Шрифты или фоновые картинки (если есть)
+  // '/fonts/your-font.woff2',
+  // '/images/bg.jpg',
+];
