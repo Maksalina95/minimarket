@@ -368,3 +368,41 @@ html, body {
   margin-top: 6px;  
   display: block;  
 }
+
+  #profilePage {
+  background-color: #f9f9f9;
+  padding: 2rem;
+  max-width: 400px;
+  margin: 2rem auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-family: "Arial", sans-serif;
+}
+
+#profilePage h2 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+#profilePage p {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  color: #666;
+}
+
+.logout-button {
+  background-color: #ff4b5c;
+  color: #fff;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #e03545;
+}
