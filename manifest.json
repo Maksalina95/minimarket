@@ -1,10 +1,13 @@
 {
   "name": "МаксМаркет",
   "short_name": "МаксМаркет",
-  "start_url": "./",
+  "start_url": "./?source=pwa",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#8c52ff",
+  "orientation": "portrait",
+  "lang": "ru",
+  "scope": "./",
   "icons": [
     {
       "src": "icons/icon-192.png",
