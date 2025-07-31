@@ -109,7 +109,7 @@ function showWelcome(name) {
   welcomeUser.style.display = 'block';
   setTimeout(() => {
     welcomeUser.style.display = 'none';
-  }, 3000);
+  }, 6000);
 }
 
 // --- Запуск при загрузке страницы ---
