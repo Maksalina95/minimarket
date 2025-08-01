@@ -30,11 +30,11 @@ export async function showFilteredProducts(container, category, subcategory) {
       <strong>${item["цена"]} ₽</strong>  
     `;  
   
-    card.addEventListener("click", () => {  
-      setProductData(filtered);           // сохраняем список  
-      setProductIndex(index);             // сохраняем индекс  
-      loadPage("product", index);         // загружаем карточку  
-    });  
+    card.addEventListener("click", () => {
+  setProductData(filtered);           // сохраняем список
+  setProductIndex(index);             // сохраняем индекс
+  loadPage("product", { index, from: { category, subcategory } }); // передаём откуда пришли
+});
   
     list.appendChild(card);  
   });  
