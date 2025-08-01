@@ -2,20 +2,20 @@
 let deferredPrompt;
 
 window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
+e.preventDefault();
+deferredPrompt = e;
 
-  const installBtn = document.getElementById('installBtn');
-  if (installBtn) {
-    installBtn.style.display = 'inline-block';
-    installBtn.addEventListener('click', async () => {
-      installBtn.style.display = 'none';
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      console.log(`Пользователь выбрал: ${outcome}`);
-      deferredPrompt = null;
-    });
-  }
+const installBtn = document.getElementById('installBtn');
+if (installBtn) {
+installBtn.style.display = 'inline-block';
+installBtn.addEventListener('click', async () => {
+installBtn.style.display = 'none';
+deferredPrompt.prompt();
+const { outcome } = await deferredPrompt.userChoice;
+console.log(Пользователь выбрал: ${outcome});
+deferredPrompt = null;
+});
+}
 });
 
 // --- Импорты модулей (должны быть в начале файла) ---
@@ -36,186 +36,188 @@ const profilePhone = document.getElementById('profilePhone');
 
 // --- Навигация ---
 function setActive(page) {
-  navLinks.forEach(link => link.classList.remove("active"));
-  const activeLink = document.querySelector(`nav a[data-page="${page}"]`);
-  if (activeLink) activeLink.classList.add("active");
+navLinks.forEach(link => link.classList.remove("active"));
+const activeLink = document.querySelector(nav a[data-page="${page}"]);
+if (activeLink) activeLink.classList.add("active");
 }
 
 export async function loadPage(page, data = null, skipHistory = false) {
-  const user = JSON.parse(localStorage.getItem('user'));
-  if (user && user.phone) {
-    try {
-      const response = await fetch('/api/check-block', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone: user.phone })
-      });
-      const result = await response.json();
-      if (result.blocked) {
-        alert("Ваш аккаунт заблокирован. Выход выполнен.");
-        localStorage.removeItem("user");
-        location.reload();
-        return;
-      }
-    } catch (error) {
-      console.error("Ошибка проверки блокировки:", error);
-      alert("Не удалось проверить статус блокировки. Повторите позже.");
-      return;
-    }
-  }
+const user = JSON.parse(localStorage.getItem('user'));
+if (user && user.phone) {
+try {
+const response = await fetch('/api/check-block', {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify({ phone: user.phone })
+});
+const result = await response.json();
+if (result.blocked) {
+alert("Ваш аккаунт заблокирован. Выход выполнен.");
+localStorage.removeItem("user");
+location.reload();
+return;
+}
+} catch (error) {
+console.error("Ошибка проверки блокировки:", error);
+alert("Не удалось проверить статус блокировки. Повторите позже.");
+return;
+}
+}
 
-  setActive(page);
+setActive(page);
 
-  const searchContainer = document.querySelector(".search-container");
-  if (page === "home" || page === "catalog") {
-    searchContainer.style.display = "flex";
-  } else {
-    searchContainer.style.display = "none";
-  }
+const searchContainer = document.querySelector(".search-container");
+if (page === "home" || page === "catalog") {
+searchContainer.style.display = "flex";
+} else {
+searchContainer.style.display = "none";
+}
 
-  if (!skipHistory) {
-    const url = page === "product" ? `#product-${data}` : `#${page}`;
-    history.pushState({ page, data }, "", url);
-  }
+if (!skipHistory) {
+const url = page === "product" ? #product-${data} : #${page};
+history.pushState({ page, data }, "", url);
+}
 
-  profilePage.style.display = 'none';
-  welcomeUser.style.display = 'none';
+profilePage.style.display = 'none';
+welcomeUser.style.display = 'none';
 
-  if (page === "home") {
-    await showHome(content);
-  } else if (page === "catalog") {
-    await showCatalog(content);
-  } else if (page === "product") {
-    await showProductPage(content, data);
-  } else if (page === "profile") {
-    content.innerHTML = "";
-    if (user) {
-      profileName.textContent = 'Вы вошли как: ' + user.name;
-      profilePhone.textContent = 'Ваш номер: ' + user.phone;
-      profilePage.style.display = 'block';
-    }
-  }
+if (page === "home") {
+await showHome(content);
+} else if (page === "catalog") {
+await showCatalog(content);
+} else if (page === "product") {
+await showProductPage(content, data);
+} else if (page === "profile") {
+content.innerHTML = "";
+if (user) {
+profileName.textContent = 'Вы вошли как: ' + user.name;
+profilePhone.textContent = 'Ваш номер: ' + user.phone;
+profilePage.style.display = 'block';
+}
+}
 }
 
 // --- Отображение основного интерфейса ---
 function showMainApp() {
-  registerSection.style.display = 'none';
-  mainApp.style.display = 'block';
-  loadPage("home");
+registerSection.style.display = 'none';
+mainApp.style.display = 'block';
+loadPage("home");
 }
 
 function showWelcome(name) {
-  welcomeUser.textContent = `Добро пожаловать, ${name}!`;
-  welcomeUser.style.display = 'block';
-  setTimeout(() => {
-    welcomeUser.style.display = 'none';
-  }, 6000);
+welcomeUser.textContent = Добро пожаловать, ${name}!;
+welcomeUser.style.display = 'block';
+setTimeout(() => {
+welcomeUser.style.display = 'none';
+}, 6000);
 }
 
 // --- Запуск при загрузке страницы ---
 document.addEventListener("DOMContentLoaded", async () => {
-  const user = JSON.parse(localStorage.getItem('user'));
+const user = JSON.parse(localStorage.getItem('user'));
 
-  if (user && user.name && user.phone) {
-    try {
-      const response = await fetch('/api/check-block', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone: user.phone })
-      });
+if (user && user.name && user.phone) {
+try {
+const response = await fetch('/api/check-block', {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify({ phone: user.phone })
+});
 
-      const result = await response.json();
+const result = await response.json();    
 
-      if (result.blocked) {
-        alert("Этот аккаунт был заблокирован. Вход невозможен.");
-        localStorage.removeItem("user");
-        registerSection.style.display = 'block';
-        return;
-      }
+  if (result.blocked) {    
+    alert("Этот аккаунт был заблокирован. Вход невозможен.");    
+    localStorage.removeItem("user");    
+    registerSection.style.display = 'block';    
+    return;    
+  }    
 
-      showMainApp();
-      showWelcome(user.name);
-    } catch (err) {
-      console.error("Ошибка при проверке блокировки:", err);
-      alert("Не удалось проверить статус блокировки. Повторите позже.");
-      registerSection.style.display = 'block';
-    }
-  } else {
-    registerSection.style.display = 'block';
-  }
+  showMainApp();    
+  showWelcome(user.name);    
+} catch (err) {    
+  console.error("Ошибка при проверке блокировки:", err);    
+  alert("Не удалось проверить статус блокировки. Повторите позже.");    
+  registerSection.style.display = 'block';    
+}
 
-  // --- Обработка формы регистрации ---
-  document.getElementById("register-form").addEventListener("submit", (e) => {
-    e.preventDefault();
-    const name = document.getElementById("name").value.trim();
-    const phone = document.getElementById("phone").value.trim();
+} else {
+registerSection.style.display = 'block';
+}
 
-    if (name && phone) {
-      fetch("/api/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, phone }),
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log("Ответ от сервера:", data);
-        if (data.success) {
-          localStorage.setItem("user", JSON.stringify({ name, phone }));
+// --- Обработка формы регистрации ---
+document.getElementById("register-form").addEventListener("submit", (e) => {
+e.preventDefault();
+const name = document.getElementById("name").value.trim();
+const phone = document.getElementById("phone").value.trim();
 
-          fetch('/api/check-block', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ phone })
-          })
-          .then(res => res.json())
-          .then(result => {
-            if (result.blocked) {
-              alert('Ваш аккаунт заблокирован');
-              localStorage.removeItem("user");
-              registerSection.style.display = 'block';
-            } else {
-              showMainApp();
-              showWelcome(name);
-            }
-          })
-          .catch(error => {
-            console.error("Ошибка при проверке блокировки:", error);
-            alert("Ошибка при проверке блокировки. Повторите позже.");
-          });
+if (name && phone) {    
+  fetch("/api/register", {    
+    method: "POST",    
+    headers: { "Content-Type": "application/json" },    
+    body: JSON.stringify({ name, phone }),    
+  })    
+  .then(response => response.json())    
+  .then(data => {    
+    console.log("Ответ от сервера:", data);    
+    if (data.success) {    
+      localStorage.setItem("user", JSON.stringify({ name, phone }));    
 
-        } else {
-          alert("Ошибка регистрации: " + (data.error || "Неизвестная ошибка"));
-        }
-      });
-    }
-  });
+      fetch('/api/check-block', {    
+        method: 'POST',    
+        headers: { 'Content-Type': 'application/json' },    
+        body: JSON.stringify({ phone })    
+      })    
+      .then(res => res.json())    
+      .then(result => {    
+        if (result.blocked) {    
+          alert('Ваш аккаунт заблокирован');    
+          localStorage.removeItem("user");    
+          registerSection.style.display = 'block';    
+        } else {    
+          showMainApp();    
+          showWelcome(name);    
+        }    
+      })    
+      .catch(error => {    
+        console.error("Ошибка при проверке блокировки:", error);    
+        alert("Ошибка при проверке блокировки. Повторите позже.");    
+      });    
 
-  // --- Кнопка выхода ---
-  document.getElementById("logoutBtn").addEventListener("click", () => {
-    localStorage.removeItem("user");
-    location.reload();
-  });
+    } else {    
+      alert("Ошибка регистрации: " + (data.error || "Неизвестная ошибка"));    
+    }    
+  });    
+}
 
-  // --- Навигация ---
-  navLinks.forEach(link => {
-    link.addEventListener("click", e => {
-      e.preventDefault();
-      const page = link.getAttribute("data-page");
-      loadPage(page);
-    });
-  });
+});
 
-  setupSearchGlobal();
+// --- Кнопка выхода ---
+document.getElementById("logoutBtn").addEventListener("click", () => {
+localStorage.removeItem("user");
+location.reload();
+});
 
-  // --- История переходов (назад/вперёд) ---
-  window.onpopstate = (event) => {
-    const state = event.state;
-    if (state?.page === 'product') {
-      loadPage('product', state.data, true);
-    } else if (state?.page) {
-      loadPage(state.page, state.data, true);
-    } else {
-      loadPage("home", null, true);
-    }
-  };
+// --- Навигация ---
+navLinks.forEach(link => {
+link.addEventListener("click", e => {
+e.preventDefault();
+const page = link.getAttribute("data-page");
+loadPage(page);
+});
+});
+
+setupSearchGlobal();
+
+// --- История переходов (назад/вперёд) ---
+window.onpopstate = (event) => {
+const state = event.state;
+if (state?.page === 'product') {
+loadPage('product', state.data, true);
+} else if (state?.page) {
+loadPage(state.page, state.data, true);
+} else {
+loadPage("home", null, true);
+}
+};
 });
