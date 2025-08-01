@@ -1,4 +1,5 @@
-// Массив товаров и текущий индекс
+import { loadPage } from "./app.js";
+
 let productData = [];
 let productIndex = 0;
 
@@ -14,9 +15,12 @@ export function getCurrentProduct() {
   return productData[productIndex];
 }
 
-export function showProductPage(container, index) {
+export function showProductPage(container, index, from) {
   const product = productData[index];
   productIndex = index;
+
+  // Сохраняем состояние в истории
+  history.pushState({ page: "product", data: { index, from } }, "", "");
 
   container.innerHTML = `
     <div class="product-card">
@@ -33,6 +37,12 @@ export function showProductPage(container, index) {
   `;
 
   document.getElementById("backToPrevious").addEventListener("click", () => {
-    history.back();
+    if (from?.category && from?.subcategory) {
+      loadPage("subcategory", from); // вернуться в подкатегорию
+    } else if (from?.category) {
+      loadPage("category", from); // вернуться в категорию
+    } else {
+      loadPage("catalog"); // вернуться в корень каталога
+    }
   });
 }
