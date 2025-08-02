@@ -1,59 +1,59 @@
-<!DOCTYPE html>    <html lang="ru">    
-<head>    
-  <meta charset="UTF-8" />    
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />    
-  <title>МаксМаркет</title>    
-  <link rel="manifest" href="/manifest.json" />    
-  <meta name="theme-color" content="#8c52ff" />    
-  <link rel="stylesheet" href="style.css" />    
-  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet" />    
-</head>    
-<body>      <!-- 🔐 Регистрация -->    <section class="register-section" id="registerSection" style="display: none;">    
-  <h2>Вход на сайт</h2>    
-  <form id="register-form">    
-    <input type="text" id="name" placeholder="Ваше имя" required />    
-    <input type="tel" id="phone" placeholder="Телефон" required />    
-    <button type="submit">Войти</button>    
-  </form>    
-  <p style="margin-top: 10px; color: gray; font-size: 14px;">    
-    *Имя и номер нужны, чтобы мы знали, что вы — это вы. Приятного просмотра!. <br />    
-    Если возникнут вопросы, обращайтесь: <strong>89376280080</strong>    
-  </p>    
-</section>      <!-- 🛍 Основной интерфейс -->      <div id="mainApp" style="display: none;">    
-    <header class="header">    
-      <h1 class="site-title">МаксМаркет</h1>    
-      <button id="installBtn" class="install-button" style="display: none;">Установить</button>    
-    </header>    <!-- 🔍 Поиск -->    
-<div class="search-container">    
-  <input type="text" id="searchInput" placeholder="Поиск товаров..." />    
-  <button id="clearSearch" style="display: none;">×</button>    
-  <button id="searchBtn">Найти</button>    
-  <ul id="suggestions"></ul>    
-</div>    
+<!DOCTYPE html>  <html lang="ru">  
+<head>  
+  <meta charset="UTF-8" />  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  
+  <title>МаксМаркет</title>  
+  <link rel="manifest" href="/manifest.json" />  
+  <meta name="theme-color" content="#8c52ff" />  
+  <link rel="stylesheet" href="style.css" />  
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet" />  
+</head>  
+<body>    <!-- 🔐 Регистрация -->  <section class="register-section" id="registerSection" style="display: none;">  
+  <h2>Вход на сайт</h2>  
+  <form id="register-form">  
+    <input type="text" id="name" placeholder="Ваше имя" required />  
+    <input type="tel" id="phone" placeholder="Телефон" required />  
+    <button type="submit">Войти</button>  
+  </form>  
+  <p style="margin-top: 10px; color: gray; font-size: 14px;">  
+    *Имя и номер нужны, чтобы мы знали, что вы — это вы. Приятного просмотра!. <br />  
+    Если возникнут вопросы, обращайтесь: <strong>89376280080</strong>  
+  </p>  
+</section>    <!-- 🛍 Основной интерфейс -->    <div id="mainApp" style="display: none;">  
+    <header class="header">  
+      <h1 class="site-title">МаксМаркет</h1>  
+      <button id="installBtn" class="install-button" style="display: none;">Установить</button>  
+    </header>  <!-- 🔍 Поиск -->  
+<div class="search-container">  
+  <input type="text" id="searchInput" placeholder="Поиск товаров..." />  
+  <button id="clearSearch" style="display: none;">×</button>  
+  <button id="searchBtn">Найти</button>  
+  <ul id="suggestions"></ul>  
+</div>  
 
-<!-- 📦 Контент -->    
-<div id="content"></div>    
+<!-- 📦 Контент -->  
+<div id="content"></div>  
 
-<!-- 💬 Приветствие -->    
-<div id="welcomeUser" style="display: none; text-align: center; font-size: 20px; font-weight: bold; margin-top: 10px; color: #ff1493;"></div>    
+<!-- 💬 Приветствие -->  
+<div id="welcomeUser" style="display: none; text-align: center; font-size: 20px; font-weight: bold; margin-top: 10px; color: #ff1493;"></div>  
 
 <!-- 👤 Личный кабинет -->
 
-<div id="profilePage" style="display: none; padding: 20px; text-align: center;">    
-  <h2 id="profileName"></h2>    
-  <p id="profilePhone"></p>    
-  <button id="logoutBtn" class="logout-button">Выйти</button>    
-</div>    <!-- 🔗 Навигация ВНЕ Личного кабинета ✅ -->    <nav>    
-  <a href="#" data-page="home" class="active">Главная</a>    
-  <a href="#" data-page="catalog">Каталог</a>    
-  <a href="#" data-page="profile">Личный кабинет</a>    
-</nav>      <!-- 📦 Скрипт как ES-модуль -->      <script type="module" src="scripts/app.js"></script>      <!-- 🔧 Регистрация Service Worker -->      <script>    
-    if ('serviceWorker' in navigator) {    
-      window.addEventListener('load', () => {    
-        navigator.serviceWorker.register('/service-worker.js')    
-          .then(() => console.log('Service Worker зарегистрирован'))    
-          .catch(err => console.log('SW ошибка', err));    
-      });    
-    }    
-  </script>    </body>    
-</html>
+<div id="profilePage" style="display: none; padding: 20px; text-align: center;">  
+  <h2 id="profileName"></h2>  
+  <p id="profilePhone"></p>  
+  <button id="logoutBtn" class="logout-button">Выйти</button>  
+</div>  <!-- 🔗 Навигация ВНЕ Личного кабинета ✅ -->  <nav>  
+  <a href="#" data-page="home" class="active">Главная</a>  
+  <a href="#" data-page="catalog">Каталог</a>  
+  <a href="#" data-page="profile">Личный кабинет</a>  
+</nav>    <!-- 📦 Скрипт как ES-модуль -->    <script type="module" src="scripts/app.js"></script>    <!-- 🔧 Регистрация Service Worker -->    <script>  
+    if ('serviceWorker' in navigator) {  
+      window.addEventListener('load', () => {  
+        navigator.serviceWorker.register('/service-worker.js')  
+          .then(() => console.log('Service Worker зарегистрирован'))  
+          .catch(err => console.log('SW ошибка', err));  
+      });  
+    }  
+  </script>  </body>  
+</html> 
