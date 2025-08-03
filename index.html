@@ -8,7 +8,9 @@
   <link rel="stylesheet" href="style.css" />  
   <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet" />  
 </head>  
-<body>    <!-- 🔐 Регистрация -->  <section class="register-section" id="registerSection" style="display: none;">  
+<body>    
+  
+  <!-- 🔐 Регистрация -->  <section class="register-section" id="registerSection" style="display: none;">  
   <h2>Вход на сайт</h2>  
   <form id="register-form">  
     <input type="text" id="name" placeholder="Ваше имя" required />  
@@ -19,11 +21,28 @@
     *Имя и номер нужны, чтобы мы знали, что вы — это вы. Приятного просмотра!. <br />  
     Если возникнут вопросы, обращайтесь: <strong>89376280080</strong>  
   </p>  
-</section>    <!-- 🛍 Основной интерфейс -->    <div id="mainApp" style="display: none;">  
-    <header class="header">  
-      <h1 class="site-title">МаксМаркет</h1>  
-      <button id="installBtn" class="install-button" style="display: none;">Установить</button>  
-    </header>  <!-- 🔍 Поиск -->  
+</section>    
+  
+  <!-- 🛍 Основной интерфейс -->    <div id="mainApp" style="display: none;">  
+    <header class="header">
+  <h1 class="site-title">МаксМаркет</h1>
+  <button id="installBtn" class="install-button" style="display: none;">Установить</button>
+</header>
+
+<!-- 🎞️ Слайдер -->
+<section class="slider">
+  <div class="slide active">
+    <img src="images/slide1.jpg" alt="Фото 1" />
+  </div>
+  <div class="slide">
+    <video src="videos/promo.mp4" autoplay muted loop></video>
+  </div>
+  <div class="slide">
+    <img src="images/slide2.jpg" alt="Фото 2" />
+  </div>
+</section>
+    
+  <!-- 🔍 Поиск -->  
 <div class="search-container">  
   <input type="text" id="searchInput" placeholder="Поиск товаров..." />  
   <button id="clearSearch" style="display: none;">×</button>  
