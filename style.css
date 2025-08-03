@@ -406,3 +406,32 @@ html, body {
 .logout-button:hover {
   background-color: #e03545;
 }
+
+
+.slider {
+  width: 100%;
+  max-width: 700px;
+  margin: 24px auto;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+}
+
+.slide {
+  display: none;
+  padding: 0;
+  border-radius: 12px;
+}
+
+.slide.active {
+  display: block;
+}
+
+.slide img,
+.slide video {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 0 20px #ffb7dbaa;
+}
