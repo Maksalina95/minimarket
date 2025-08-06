@@ -62,11 +62,16 @@
   <h2 id="profileName"></h2>  
   <p id="profilePhone"></p>  
   <button id="logoutBtn" class="logout-button">Выйти</button>  
-</div>  <!-- 🔗 Навигация ВНЕ Личного кабинета ✅ -->  <nav>  
+</div> 
+    
+<!-- 🔗 Навигация ВНЕ Личного кабинета ✅ -->  
+<nav>  
   <a href="#" data-page="home" class="active">Главная</a>  
   <a href="#" data-page="catalog">Каталог</a>  
+  <a href="#" data-page="favorites">Избранное</a>  
   <a href="#" data-page="profile">Личный кабинет</a>  
-</nav>    <!-- 📦 Скрипт как ES-модуль -->    <script type="module" src="scripts/app.js"></script>    <!-- 🔧 Регистрация Service Worker -->    <script>  
+</nav>   
+    <!-- 📦 Скрипт как ES-модуль -->    <script type="module" src="scripts/app.js"></script>    <!-- 🔧 Регистрация Service Worker -->    <script>  
     if ('serviceWorker' in navigator) {  
       window.addEventListener('load', () => {  
         navigator.serviceWorker.register('/service-worker.js')  
