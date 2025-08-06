@@ -4,6 +4,7 @@ import { showCatalog, showCategoryPage } from "./catalog.js"; // ✅ Добав�
 import { showProductPage } from "./productPage.js";
 import { setupSearchGlobal } from "./search.js";
 import { showFilteredProducts } from "./filtered.js"; // 👈 ДОБАВИТЬ
+import { showFavoritesPage } from './favorites.js';
 
 
 // --- Логика PWA: кнопка установки ---
@@ -105,6 +106,8 @@ if (slider) {
     await showProductPage(content, data);
   } else if (page === "category") {
     await showCategoryPage(content, data);   // ✅ Добавлено
+  } else if (page === "favorites") {
+  await showFavoritesPage(content);
   } else if (page === "profile") {
     content.innerHTML = "";
     if (user) {
@@ -233,10 +236,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   // --- Кнопка выхода ---
-  document.getElementById("logoutBtn").addEventListener("click", () => {
-    localStorage.removeItem("user");
-    location.reload();
-  });
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (user && user.phone) {
+    localStorage.removeItem(`favorites_${user.phone}`); // удаляем избранное именно этого пользователя
+  }
+  localStorage.removeItem("user");
+  location.reload();
+});
 
   // --- Навигация ---
   navLinks.forEach(link => {
