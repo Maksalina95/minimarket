@@ -1,21 +1,15 @@
 import { fetchSheetData } from "./config.js";
-import { showFilteredProducts } from "./filtered.js";
 import { loadPage } from "./app.js";
 
+// Главная функция — показ категорий
 export async function showCatalog(container) {
   container.innerHTML = "<h2>Категории</h2><div id='categories'></div>";
   const data = await fetchSheetData();
+
   const list = document.getElementById("categories");
 
-  const searchContainer = document.querySelector(".search-container");
-  if (searchContainer) {
-    searchContainer.style.display = "flex";
-  }
-
   const categories = [...new Set(
-    data
-      .map(item => item["категория"]?.trim())
-      .filter(Boolean)
+    data.map(item => item["категория"]?.trim()).filter(Boolean)
   )];
 
   list.innerHTML = "";
@@ -25,48 +19,49 @@ export async function showCatalog(container) {
     btn.className = "category-btn";
     btn.textContent = category;
 
+    // Вместо history.pushState + showCategoryPage — вызываем loadPage!
     btn.addEventListener("click", () => {
-  showCategoryPage(container, { category }); // ✅ напрямую
-  history.pushState({ page: "category", data: { category } }, "", `#category-${category}`);
-});
+      loadPage("category", { category });
+    });
 
     list.appendChild(btn);
   });
 }
 
-export function showCategoryPage(container, { category }) {
-  fetchSheetData().then(data => {
-    container.innerHTML = `
-      <h2>${category}</h2>
-      <div id="subcategories"></div>
-      <button id="back">← Назад</button>
-    `;
+// Показ подкатегорий для выбранной категории
+export async function showCategoryPage(container, { category }) {
+  const data = await fetchSheetData();
 
-    const list = document.getElementById("subcategories");
+  container.innerHTML = `
+    <h2>${category}</h2>
+    <div id="subcategories"></div>
+    <button id="back">← Назад</button>
+  `;
 
-    const subcats = [...new Set(
-      data
-        .filter(item => item["категория"]?.trim() === category)
-        .map(item => item["подкатегория"]?.trim())
-        .filter(Boolean)
-    )];
+  const list = document.getElementById("subcategories");
 
-    list.innerHTML = "";
+  const subcats = [...new Set(
+    data
+      .filter(item => item["категория"]?.trim() === category)
+      .map(item => item["подкатегория"]?.trim())
+      .filter(Boolean)
+  )];
 
-    subcats.forEach(sub => {
-      const btn = document.createElement("button");
-      btn.className = "subcategory-btn";
-      btn.textContent = sub;
+  list.innerHTML = "";
 
-      btn.addEventListener("click", () => {
-        loadPage("filtered", { category, subcategory: sub });
-      });
+  subcats.forEach(sub => {
+    const btn = document.createElement("button");
+    btn.className = "subcategory-btn";
+    btn.textContent = sub;
 
-      list.appendChild(btn);
+    btn.addEventListener("click", () => {
+      loadPage("filtered", { category, subcategory: sub });
     });
 
-    document.getElementById("back").addEventListener("click", () => {
-      history.back(); // Назад к Каталог
-    });
+    list.appendChild(btn);
+  });
+
+  document.getElementById("back").addEventListener("click", () => {
+    loadPage("catalog");
   });
 }
