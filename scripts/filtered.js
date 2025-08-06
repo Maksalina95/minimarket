@@ -1,7 +1,7 @@
 import { fetchSheetData } from "./config.js";
-import { setProductData, setProductIndex } from "./productPage.js";
+import { setProductData, setProductId } from "./productPage.js";
 import { loadPage } from "./app.js";
-import { isFavorite, toggleFavorite } from "./favorites.js"; // ➕ добавили
+import { toggleFavorite, isFavorite } from "./favorites.js"; // 💡 добавляем
 
 export async function showFilteredProducts(container, category, subcategory) {
   const data = await fetchSheetData();
@@ -22,36 +22,36 @@ export async function showFilteredProducts(container, category, subcategory) {
   filtered.forEach((item, index) => {
     if (!item["изображение"]) return;
 
-    const heartClass = isFavorite(item["id"]) ? "heart active" : "heart";
+    const { id, название, изображение, описание, цена } = item;
 
     const card = document.createElement("div");
     card.classList.add("product-card");
 
+    const favoriteIcon = isFavorite(id) ? "❤️" : "🤍";
+
     card.innerHTML = `
-      <div class="image-container" style="position:relative;">
-        <img src="${item["изображение"]}" alt="${item["название"]}">
-        <span class="${heartClass}" data-id="${item["id"]}"
-          style="position:absolute; top:8px; right:8px; cursor:pointer; font-size:24px; user-select:none; color:red;">❤</span>
-      </div>
-      <h3>${item["название"]}</h3>
-      <p>${item["описание"] || ""}</p>
-      <strong>${item["цена"]} ₽</strong>
+      <img src="${изображение}" alt="${название}">
+      <h3>${название}</h3>
+      <p>${описание || ""}</p>
+      <strong>${цена} ₽</strong>
+      <button class="favorite-btn" data-id="${id}">${favoriteIcon}</button>
     `;
 
-    // Обработка сердечка
-    const heart = card.querySelector(".heart");
-    heart.addEventListener("click", (e) => {
-      e.stopPropagation(); // не открывать карточку при клике на ❤️
-      const id = heart.getAttribute("data-id");
-      toggleFavorite(id);
-      heart.classList.toggle("active");
+    // 📌 Открытие товара при клике на саму карточку
+    card.addEventListener("click", (e) => {
+      // Исключаем клик по "❤️"
+      if (e.target.classList.contains("favorite-btn")) return;
+
+      setProductData(filtered);
+      setProductId(item.id);
+loadPage("product", item.id);
     });
 
-    // Клик по карточке — открытие товара
-    card.addEventListener("click", () => {
-      setProductData(filtered);       // сохраняем список
-      setProductIndex(index);         // сохраняем индекс
-      loadPage("product", index);     // открываем карточку
+    // 📌 Клик по "❤️"
+    const favBtn = card.querySelector(".favorite-btn");
+    favBtn.addEventListener("click", () => {
+      toggleFavorite(id);
+      favBtn.innerText = isFavorite(id) ? "❤️" : "🤍";
     });
 
     list.appendChild(card);
