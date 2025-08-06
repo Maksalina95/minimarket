@@ -1,4 +1,7 @@
 import { fetchSheetData } from "./config.js";
+import { isFavorite, toggleFavorite } from "./favorites.js";
+import { setProductData, setProductId } from "./productPage.js"; // исправлено
+import { loadPage } from "./app.js";
 
 export async function setupSearchGlobal() {
   const input = document.getElementById("searchInput");
@@ -12,7 +15,7 @@ export async function setupSearchGlobal() {
     const content = document.getElementById("content");
     content.innerHTML = `
       <h2>Результаты поиска</h2>
-      <div id="products"></div>
+      <div id="products" class="products-grid"></div>
     `;
     const list = document.getElementById("products");
     list.innerHTML = "";
@@ -22,16 +25,41 @@ export async function setupSearchGlobal() {
       return;
     }
 
-    products.forEach(item => {
+    products.forEach((item) => {
       if (!item["изображение"]) return;
+
+      const heartClass = isFavorite(item["id"]) ? "heart active" : "heart";
+
       const block = document.createElement("div");
-      block.className = "product";
+      block.className = "product-card";
       block.innerHTML = `
-        <img src="${item["изображение"]}" alt="${item["название"]}" />
+        <div class="image-container" style="position:relative;">
+          <img src="${item["изображение"]}" alt="${item["название"]}" />
+          <span class="${heartClass}" data-id="${item["id"]}" 
+            style="position:absolute; top:8px; right:8px; cursor:pointer; user-select:none; font-size:24px; color:red;">❤</span>
+        </div>
         <h3>${item["название"]}</h3>
         <p>${item["описание"]}</p>
         <strong>${item["цена"]} ₽</strong>
+        <button class="open-product">Открыть</button>
       `;
+
+      // Открыть товар
+      block.querySelector(".open-product").addEventListener("click", () => {
+        setProductData(products);    // весь список найденных товаров
+        setProductId(item.id);
+        loadPage("product", item.id);
+      });
+
+      // Сердечко
+      const heart = block.querySelector(".heart");
+      heart.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const id = heart.getAttribute("data-id");
+        toggleFavorite(id);
+        heart.classList.toggle("active");
+      });
+
       list.appendChild(block);
     });
   }
