@@ -1,6 +1,7 @@
 import { fetchSheetData } from "./config.js";
-import { setProductData, setProductIndex } from "./productPage.js";
+import { setProductData, setProductId } from "./productPage.js";  // исправлено здесь
 import { loadPage } from "./app.js";
+import { toggleFavorite, isFavorite } from "./favorites.js";
 
 export async function showHome(container) {
   container.innerHTML = `
@@ -9,31 +10,39 @@ export async function showHome(container) {
   `;
 
   const data = await fetchSheetData();
-  setProductData(data); // сохраняем все товары
-  renderProducts(data, container);
-}
+  setProductData(data); // сохраняем данные товаров глобально
 
-function renderProducts(products, container) {
-  const list = document.getElementById("products");
-  list.innerHTML = "";
+  const productsContainer = document.getElementById("products");
 
-  products.forEach((item, index) => {
+  data.forEach((item) => {
     if (!item["изображение"]) return;
 
-    const block = document.createElement("div");
-    block.className = "product-card";
-    block.innerHTML = `
-      <img src="${item["изображение"]}" alt="${item["название"]}" />
-      <h3>${item["название"]}</h3>
-      <p>${item["описание"] || ""}</p>
-      <strong>${item["цена"]} ₽</strong>
+    const { id, название, изображение, цена } = item;
+
+    const card = document.createElement("div");
+    card.className = "product-card";
+
+    const favIcon = isFavorite(id) ? "❤️" : "🤍";
+
+    card.innerHTML = `
+      <img src="${изображение}" alt="${название}" />
+      <h3>${название}</h3>
+      <p>${цена}</p>
+      <button class="fav-btn" data-id="${id}">${favIcon}</button>
     `;
 
-    block.addEventListener("click", () => {
-      setProductIndex(index);
-      loadPage("product", index);
+    card.addEventListener("click", (e) => {
+      if (e.target.classList.contains("fav-btn")) return;
+      setProductId(id);
+      loadPage("product", id);
     });
 
-    list.appendChild(block);
+    card.querySelector(".fav-btn").addEventListener("click", (e) => {
+      e.stopPropagation();
+      toggleFavorite(id);
+      e.target.textContent = isFavorite(id) ? "❤️" : "🤍";
+    });
+
+    productsContainer.appendChild(card);
   });
 }
