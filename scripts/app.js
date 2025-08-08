@@ -75,7 +75,14 @@ export async function loadPage(page, data = null, skipHistory = false) {
       return;
     }
   }
-
+  
+  // Скрываем личный кабинет
+profilePage.style.display = 'none';
+// Показываем основной контент (по умолчанию)
+content.style.display = 'block';
+// Скрываем приветствие
+welcomeUser.style.display = 'none';
+  
   setActive(page);
   
   // Показываем/скрываем слайдер
@@ -111,17 +118,21 @@ if (slider) {
   } else if (page === "product") {
     await showProductPage(content, data);
   } else if (page === "category") {
-    await showCategoryPage(content, data);   // ✅ Добавлено
-  } else if (page === "favorites") {
+  await showCategoryPage(content, data);   // ✅ Добавлено
+} else if (page === "favorites") {
   await showFavoritesPage(content);
 } else if (page === "profile") {
-  content.style.display = 'none';         // ⬅️ ЭТУ СТРОКУ НУЖНО ДОБАВИТЬ!
-  profilePage.style.display = 'block';    // Показываем контейнер профиля
   if (user) {
-    showProfile(profilePage, user);       // Показываем профиль
+    profilePage.style.display = 'block';
+    content.style.display = 'none';
+    showProfile(profilePage, user);
   } else {
-    profilePage.innerHTML = '<p>Пожалуйста, войдите на сайт.</p>';
+    profilePage.style.display = 'none';
+    content.style.display = 'block';
+    await showHome(content);
+    setActive('home');
   }
+  return; // важная остановка
 } else if (page === "conditions") {
   await showConditions(content);
 } else if (page === "terms") {
