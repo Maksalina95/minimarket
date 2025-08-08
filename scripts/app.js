@@ -5,6 +5,13 @@ import { showProductPage } from "./productPage.js";
 import { setupSearchGlobal } from "./search.js";
 import { showFilteredProducts } from "./filtered.js"; // 👈 ДОБАВИТЬ
 import { showFavoritesPage } from './favorites.js';
+import { showProfile } from './profilePage.js';
+import { showConditions } from './conditions.js';
+import { showTerms } from './terms.js';
+import { showAddress } from './address.js';
+import { showCash } from './cash.js';
+import { showContacts } from './contacts.js';
+import { showDelivery } from './delivery.js';
 
 
 // --- Логика PWA: кнопка установки ---
@@ -21,8 +28,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
       installBtn.style.display = 'none';
       deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
-      console.log(`Пользователь выбрал: ${outcome}`);
-      deferredPrompt = null;
+console.log(`Пользователь выбрал: ${outcome}`);      deferredPrompt = null;
     });
   }
 });
@@ -108,16 +114,30 @@ if (slider) {
     await showCategoryPage(content, data);   // ✅ Добавлено
   } else if (page === "favorites") {
   await showFavoritesPage(content);
-  } else if (page === "profile") {
-    content.innerHTML = "";
-    if (user) {
-      profileName.textContent = 'Вы вошли как: ' + user.name;
-      profilePhone.textContent = 'Ваш номер: ' + user.phone;
-      profilePage.style.display = 'block';
-    }
+} else if (page === "profile") {
+  content.style.display = 'none';         // ⬅️ ЭТУ СТРОКУ НУЖНО ДОБАВИТЬ!
+  profilePage.style.display = 'block';    // Показываем контейнер профиля
+  if (user) {
+    showProfile(profilePage, user);       // Показываем профиль
+  } else {
+    profilePage.innerHTML = '<p>Пожалуйста, войдите на сайт.</p>';
   }
-}
+} else if (page === "conditions") {
+  await showConditions(content);
+} else if (page === "terms") {
+  await showTerms(content);
+} else if (page === "address") {
+  await showAddress(content);
+} else if (page === "cash") {
+  await showCash(content);
+} else if (page === "contacts") {
+  await showContacts(content);
+} else if (page === "delivery") {
+    await showDelivery(content);
+  }
+} // <-- закрываем функцию loadPage
 
+// --- Слайдер ---
 // --- Слайдер ---
 function initSlider() {
   let currentSlide = 0;
@@ -127,6 +147,17 @@ function initSlider() {
   function showSlide(index) {
     slides.forEach((slide, i) => {
       slide.classList.toggle('active', i === index);
+
+      // Управляем видео
+      const video = slide.querySelector('video');
+      if (video) {
+        if (i === index) {
+          video.play().catch(() => {});  // пытаемся запустить видео
+        } else {
+          video.pause();
+          video.currentTime = 0;         // сброс видео на начало
+        }
+      }
     });
   }
 
@@ -234,16 +265,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
     }
   });
-
-  // --- Кнопка выхода ---
-document.getElementById("logoutBtn").addEventListener("click", () => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  if (user && user.phone) {
-    localStorage.removeItem(`favorites_${user.phone}`); // удаляем избранное именно этого пользователя
-  }
-  localStorage.removeItem("user");
-  location.reload();
-});
 
   // --- Навигация ---
   navLinks.forEach(link => {
