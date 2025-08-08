@@ -35,9 +35,6 @@
     <img src="images/slide1.jpg" alt="Фото 1" />
   </div>
   <div class="slide">
-    <video src="videos/promo.mp4" autoplay muted loop></video>
-  </div>
-  <div class="slide">
     <img src="images/slide2.jpg" alt="Фото 2" />
   </div>
 </section>
@@ -57,11 +54,8 @@
 <div id="welcomeUser" style="display: none; text-align: center; font-size: 20px; font-weight: bold; margin-top: 10px; color: #ff1493;"></div>  
 
 <!-- 👤 Личный кабинет -->
-
-<div id="profilePage" style="display: none; padding: 20px; text-align: center;">  
-  <h2 id="profileName"></h2>  
-  <p id="profilePhone"></p>  
-  <button id="logoutBtn" class="logout-button">Выйти</button>  
+<div id="profilePage" style="display: none; padding: 20px; text-align: center;">
+  <!-- Контент профиля будет динамически загружаться сюда -->
 </div> 
     
 <!-- 🔗 Навигация ВНЕ Личного кабинета ✅ -->  
@@ -71,6 +65,7 @@
   <a href="#" data-page="favorites">Избранное</a>  
   <a href="#" data-page="profile">Личный кабинет</a>  
 </nav>   
+    
     <!-- 📦 Скрипт как ES-модуль -->    <script type="module" src="scripts/app.js"></script>    <!-- 🔧 Регистрация Service Worker -->    <script>  
     if ('serviceWorker' in navigator) {  
       window.addEventListener('load', () => {  
