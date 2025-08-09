@@ -1,78 +1,122 @@
-<!DOCTYPE html>  <html lang="ru">  
-<head>  
-  <meta charset="UTF-8" />  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  
-  <title>МаксМаркет</title>  
-  <link rel="manifest" href="/manifest.json" />  
-  <meta name="theme-color" content="#8c52ff" />  
-  <link rel="stylesheet" href="style.css" />  
-  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet" />  
-</head>  
-<body>    
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>МаксМаркет</title>
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#8c52ff" />
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet" />
   
-  <!-- 🔐 Регистрация -->  <section class="register-section" id="registerSection" style="display: none;">  
-  <h2>Вход на сайт</h2>  
-  <form id="register-form">  
-    <input type="text" id="name" placeholder="Ваше имя" required />  
-    <input type="tel" id="phone" placeholder="Телефон" required />  
-    <button type="submit">Войти</button>  
-  </form>  
-  <p style="margin-top: 10px; color: gray; font-size: 14px;">  
-    *Имя и номер нужны, чтобы мы знали, что вы — это вы. Приятного просмотра!. <br />  
-    Если возникнут вопросы, обращайтесь: <strong>89376280080</strong>  
-  </p>  
-</section>    
+  <!-- Подключаем Font Awesome бесплатно -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-pV7mM9nPKYnvQ2NXA8UQtWwS9Wvpu6gF30sNRuBhz7Fl4jf9FN52Q28eyuycyALr9W7ZsuXYfF2+8M0MknbHg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+</head>
+<body>
   
-  <!-- 🛍 Основной интерфейс -->    <div id="mainApp" style="display: none;">  
+  <!-- 🔐 Регистрация -->
+  <section class="register-section" id="registerSection" style="display: none;">
+    <h2>Вход на сайт</h2>
+    <form id="register-form">
+      <input type="text" id="name" placeholder="Ваше имя" required />
+      <input type="tel" id="phone" placeholder="Телефон" required />
+      <button type="submit">Войти</button>
+    </form>
+    <p style="margin-top: 10px; color: gray; font-size: 14px;">
+      *Имя и номер нужны, чтобы мы знали, что вы — это вы. Приятного просмотра!. <br />
+      Если возникнут вопросы, обращайтесь: <strong>89376280080</strong>
+    </p>
+  </section>
+  
+  <!-- 🛍 Основной интерфейс -->
+  <div id="mainApp" style="display: none;">
     <header class="header">
-  <h1 class="site-title">МаксМаркет</h1>
-  <button id="installBtn" class="install-button" style="display: none;">Установить</button>
-</header>
+      <h1 class="site-title">МаксМаркет</h1>
+      <button id="installBtn" class="install-button" style="display: none;">Установить</button>
+    </header>
 
-<!-- 🎞️ Слайдер -->
-<section class="slider">
-  <div class="slide active">
-    <img src="images/slide1.jpg" alt="Фото 1" />
+    <!-- 🎞️ Слайдер -->
+    <section class="slider">
+      <div class="slide active">
+        <img src="images/slide1.jpg" alt="Фото 1" />
+      </div>
+      <div class="slide">
+        <img src="images/slide2.jpg" alt="Фото 2" />
+      </div>
+    </section>
+    
+    <!-- 🔍 Поиск -->
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Поиск товаров..." />
+      <button id="clearSearch" style="display: none;">×</button>
+      <button id="searchBtn">Найти</button>
+      <ul id="suggestions"></ul>
+    </div>
+
+    <!-- 📦 Контент -->
+    <div id="content"></div>
+
+    <!-- 💬 Приветствие -->
+    <div id="welcomeUser" style="display: none; text-align: center; font-size: 20px; font-weight: bold; margin-top: 10px; color: #ff1493;"></div>
+
+    <!-- 👤 Личный кабинет -->
+    <div id="profilePage" style="display: none; padding: 20px; text-align: center;">
+      <!-- Контент профиля будет динамически загружаться сюда -->
+    </div>
+
+    <nav>
+  <a href="#" data-page="home" class="active" aria-label="Главная">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 576 512" aria-hidden="true" focusable="false">
+      <path d="M280.37 148.26L96 300.11V464a16 16 0 0016 16l112-.3a16 16 0 0016-15.7V368a16 16 0 0116-16h64a16 16 0 0116 16v111.7a16 16 0 0016 15.7l112 .3a16 16 0 0016-16V300L295.67 148.26a12.19 12.19 0 00-15.3 0zM571.6 251.47L488 182.54V44a12 12 0 00-12-12h-56a12 12 0 00-12 12v72.61L318.47 43a48 48 0 00-61 0L4.34 251.47a12 12 0 00-1.6 17l25.5 31a12 12 0 0017 1.6L64 271.7V464a48 48 0 0048 48h368a48 48 0 0048-48V271.7l18.3 15.38a12 12 0 0017-1.6l25.5-31a12 12 0 00-1.7-17z"/>
+    </svg>
+    <span>Главная</span>
+  </a>
+
+  <a href="#" data-page="catalog" aria-label="Каталог">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 512 512" aria-hidden="true" focusable="false">
+      <path d="M96 96h320v32H96zm0 96h320v32H96zm0 96h320v32H96zm0 96h320v32H96z"/>
+    </svg>
+    <span>Каталог</span>
+  </a>
+
+  <a href="#" data-page="favorites" aria-label="Избранное">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 512 512" aria-hidden="true" focusable="false">
+      <path d="M256 464l-16-14C118 342 48 278 48 192 48 130 98 80 160 80c32 0 60 15 80 38 20-23 48-38 80-38 62 0 112 50 112 112 0 86-70 150-192 258l-16 14z"/>
+    </svg>
+    <span>Избранное</span>
+  </a>
+
+  <a href="#" data-page="profile" aria-label="Личный кабинет">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 448 512" aria-hidden="true" focusable="false">
+      <path d="M224 256A128 128 0 1096 128a128 128 0 00128 128zm89.6 32h-11.1c-22.2 10.3-46.7 16-72.5 16s-50.3-5.7-72.5-16H134.4A134.4 134.4 0 000 422.4V464a48 48 0 0048 48h352a48 48 0 0048-48v-41.6A134.4 134.4 0 00313.6 288z"/>
+    </svg>
+    <span>Профиль</span>
+  </a>
+    </nav>
+    
+    <!-- Подключаем обработчик ошибок -->
+<script src="scripts/errorHandler.js"></script>
+
+    
+    <!-- 📦 Скрипт как ES-модуль -->
+    <script type="module" src="scripts/app.js"></script>
+    
+    <!-- 🔧 Регистрация Service Worker -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/service-worker.js')
+            .then(() => console.log('Service Worker зарегистрирован'))
+            .catch(err => console.log('SW ошибка', err));
+        });
+      }
+    </script>
   </div>
-  <div class="slide">
-    <img src="images/slide2.jpg" alt="Фото 2" />
-  </div>
-</section>
-    
-  <!-- 🔍 Поиск -->  
-<div class="search-container">  
-  <input type="text" id="searchInput" placeholder="Поиск товаров..." />  
-  <button id="clearSearch" style="display: none;">×</button>  
-  <button id="searchBtn">Найти</button>  
-  <ul id="suggestions"></ul>  
-</div>  
-
-<!-- 📦 Контент -->  
-<div id="content"></div>  
-
-<!-- 💬 Приветствие -->  
-<div id="welcomeUser" style="display: none; text-align: center; font-size: 20px; font-weight: bold; margin-top: 10px; color: #ff1493;"></div>  
-
-<!-- 👤 Личный кабинет -->
-<div id="profilePage" style="display: none; padding: 20px; text-align: center;">
-  <!-- Контент профиля будет динамически загружаться сюда -->
-</div> 
-    
-<!-- 🔗 Навигация ВНЕ Личного кабинета ✅ -->  
-<nav>  
-  <a href="#" data-page="home" class="active">Главная</a>  
-  <a href="#" data-page="catalog">Каталог</a>  
-  <a href="#" data-page="favorites">Избранное</a>  
-  <a href="#" data-page="profile">Личный кабинет</a>  
-</nav>   
-    
-    <!-- 📦 Скрипт как ES-модуль -->    <script type="module" src="scripts/app.js"></script>    <!-- 🔧 Регистрация Service Worker -->    <script>  
-    if ('serviceWorker' in navigator) {  
-      window.addEventListener('load', () => {  
-        navigator.serviceWorker.register('/service-worker.js')  
-          .then(() => console.log('Service Worker зарегистрирован'))  
-          .catch(err => console.log('SW ошибка', err));  
-      });  
-    }  
-  </script>  </body>  
-</html> 
+</body>
+</html>
