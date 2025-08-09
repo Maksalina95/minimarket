@@ -1,7 +1,7 @@
 // --- Импорты модулей (должны быть в начале файла) ---
 import { showHome } from "./home.js";
 import { showCatalog, showCategoryPage } from "./catalog.js"; // ✅ Добавлено showCategoryPage
-import { showProductPage } from "./productPage.js";
+import { showProductPage, setProductData } from "./productPage.js";
 import { setupSearchGlobal } from "./search.js";
 import { showFilteredProducts } from "./filtered.js"; // 👈 ДОБАВИТЬ
 import { showFavoritesPage } from './favorites.js';
